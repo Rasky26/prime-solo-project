@@ -15,7 +15,10 @@ function LoginForm() {
       dispatch({
         type: 'LOGIN',
         payload: {
-          email: email,
+          // The email field MUST still pass the key
+          // `username` in order to work with the
+          // node_module `passport_local` library!!!
+          username: email,
           password: password,
         },
       });
