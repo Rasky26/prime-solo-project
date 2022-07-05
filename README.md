@@ -22,10 +22,14 @@ Before you get started, make sure you have the following software installed on y
 Create a new database called `prime_app` and create a `user` table:
 
 ```SQL
+CREATE EXTENSION citext;
+CREATE DOMAIN domain_email AS citext
+	CHECK ( value ~ '^(?:[a-z0-9!#$%&''*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&''*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$' )
+	CONSTRAINT limit_length CHECK (char_length(value) <= 255);
 CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
+	"id" SERIAL PRIMARY KEY,
+	"email" domain_email UNIQUE NOT NULL,
+	"password" VARCHAR (1000) NOT NULL
 );
 ```
 
@@ -63,8 +67,8 @@ Keep in mind that once you using the login route, Postman will manage your sessi
 1. Start the server - `npm run server`
 2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
 3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
+   1. `POST /api/user/register` registers a new user, see body to change email/password
+   2. `POST /api/user/login` will login a user, see body to change email/password
    3. `GET /api/user` will get user information, by default it's not very much
 
 After running the login route above, you can try any other route you've created that requires a logged in user!
