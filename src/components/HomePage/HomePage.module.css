@@ -1,0 +1,15 @@
+.emphasis {
+    font-size: 120%;
+    font-weight: var(--fw-bold);
+}
+
+.homepage_buttons {
+    border: 1px solid var(--clr-background);
+    border-radius: 16px;
+    background-color: var(--clr-background);
+    padding: 8px 20px;
+    text-decoration: none;
+    font-size: 226%;
+    font-weight: var(--fw-bold);
+    color: var(--clr-font-light)
+}

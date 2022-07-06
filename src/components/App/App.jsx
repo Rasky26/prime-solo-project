@@ -1,23 +1,18 @@
+// Import the core libraries 
 import React, { useEffect } from 'react';
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
-
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
-
+// Import the `ProtectedRoutes` component to restrict access behind login
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
+// Import the used components
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import HomePageLoggedIn from '../HomePage/HomePageLoggedIn';
+import HomePageNotLoggedIn from '../HomePage/HomePageNotLoggedIn';
 import LoginPage from '../LoginPage/LoginPage';
+import Nav from '../Nav/Nav';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
@@ -33,80 +28,68 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <Nav />
+
+      <Header />
+
+      <Nav />
+
+      <main>
+      
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
-
-          {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
+          {/* <Redirect from="/" to="/home" exact /> */}
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          <ProtectedRoute
+          {/* <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
             path="/user"
           >
             <UserPage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
 
-          <ProtectedRoute
+          {/* <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
             path="/info"
           >
             <InfoPage />
-          </ProtectedRoute>
+          </ProtectedRoute> */}
 
-          <Route
-            exact
-            path="/login"
-          >
+          <Route path="/login" exact>
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/" />
               :
               // Otherwise, show the login page
               <LoginPage />
             }
           </Route>
 
-          <Route
-            exact
-            path="/registration"
-          >
+          <Route path="/registration" exact>
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/" />
               :
               // Otherwise, show the registration page
               <RegisterPage />
             }
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
+          <Route path="/" exact>
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              // <Redirect to="/user" />
+              <HomePageLoggedIn />
               :
               // Otherwise, show the Landing page
-              <LandingPage />
+              <HomePageNotLoggedIn />
             }
           </Route>
 
@@ -114,9 +97,13 @@ function App() {
           <Route>
             <h1>404</h1>
           </Route>
+
         </Switch>
-        <Footer />
-      </div>
+
+      </main>
+
+      <Footer />
+
     </Router>
   );
 }
