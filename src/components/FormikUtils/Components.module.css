@@ -1,0 +1,9 @@
+.display_password {
+  background: none;
+  color: var(--clr-link);
+  border: none;
+	padding: 0;
+	font: inherit;
+	outline: inherit;
+  font-size: 86%;
+}

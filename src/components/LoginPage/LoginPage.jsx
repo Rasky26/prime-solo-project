@@ -1,27 +1,32 @@
-import React from 'react';
-import LoginForm from '../LoginForm/LoginForm';
-import { useHistory } from 'react-router-dom';
+// Import the core libraries and functions
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
 
-function LoginPage() {
-  const history = useHistory();
+// Import the used components
+import LoginForm from '../LoginForm/LoginForm'
+
+
+// Component that builds the login form on the screen.
+// Also provides links to the registration page.
+export default function LoginPage() {
+
+  // Get the current errors from REDUX state
+  const errors = useSelector(store => store.errors)
+
+  console.log(errors, "this is errors")
 
   return (
     <div>
+
+      {errors.loginMessage ?
+        <p className='error-field'>{errors.loginMessage}</p>
+        :
+        null
+      }
+
       <LoginForm />
-
-      <center>
-        <button
-          type="button"
-          className="btn btn_asLink"
-          onClick={() => {
-            history.push('/registration');
-          }}
-        >
-          Register
-        </button>
-      </center>
+      
+      <Link to="/registration">Register</Link>
     </div>
-  );
+  )
 }
-
-export default LoginPage;

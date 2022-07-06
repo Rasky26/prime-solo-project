@@ -6,10 +6,10 @@ const loginMessage = (state = '', action) => {
   switch (action.type) {
     case 'CLEAR_LOGIN_ERROR':
       return '';
-    case 'LOGIN_INPUT_ERROR':
-      return 'Enter your email and password!';
+    // case 'LOGIN_INPUT_ERROR':
+    //   return 'Enter your email and password!';
     case 'LOGIN_FAILED':
-      return "Oops! The email and password didn't match. Try again!";
+      return "Login failed. Check the email and password.";
     case 'LOGIN_FAILED_NO_CODE':
       return 'Oops! Something went wrong! Is the server running?';
     default:
@@ -26,7 +26,7 @@ const registrationMessage = (state = '', action) => {
     case 'REGISTRATION_INPUT_ERROR':
       return 'Choose a email and password!';
     case 'REGISTRATION_FAILED':
-      return "Oops! That didn't work. The email might already be taken. Try again!";
+      return "Invalid email or password. Please try again.";
     default:
       return state;
   }

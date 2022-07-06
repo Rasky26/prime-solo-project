@@ -2,6 +2,7 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+
 // Component that handles displaying and the logic behind the
 // the logout button
 export default function LogOutButton(props) {
