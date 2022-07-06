@@ -1,47 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
+// Import the used library functions & components
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-function Nav() {
-  const user = useSelector((store) => store.user);
+// Component that handles the construction and display of the side
+// <Nav> bar.
+export default function Nav() {
+
+  const user = useSelector(store => store.user)
+
+  // Initilize the number of forecasts that are
+  // pending to be created for the day.
+  // const user = useSelector((store) => store.user);
 
   return (
-    <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
-      </Link>
-      <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <Link className="navLink" to="/login">
-            Login / Register
-          </Link>
-        )}
+    <nav>
 
-        {/* If a user is logged in, show these links */}
-        {user.id && (
-          <>
-            <Link className="navLink" to="/user">
-              Home
-            </Link>
-
-            <Link className="navLink" to="/info">
-              Info Page
-            </Link>
-
-            <LogOutButton className="navLink" />
-          </>
-        )}
-
-        <Link className="navLink" to="/about">
-          About
+      {user.id ?
+        <Link className="nav-link" to="/forecast">
+          Forecast
         </Link>
-      </div>
-    </div>
-  );
-}
+        :
+        <Link to="/">
+          Home
+        </Link>
+      }
 
-export default Nav;
+      <Link className="nav-link" to="/locations">
+        Locations
+      </Link>
+
+      <Link className="nav-link" to="/history">
+        History
+      </Link>
+
+    </nav>
+  )
+}
