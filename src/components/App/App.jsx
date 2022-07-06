@@ -1,30 +1,38 @@
 // Import the core libraries 
-import React, { useEffect } from 'react';
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react'
+import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 // Import the `ProtectedRoutes` component to restrict access behind login
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
 // Import the used components
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
-import HomePageLoggedIn from '../HomePage/HomePageLoggedIn';
-import HomePageNotLoggedIn from '../HomePage/HomePageNotLoggedIn';
-import LoginPage from '../LoginPage/LoginPage';
-import Nav from '../Nav/Nav';
-import RegisterPage from '../RegisterPage/RegisterPage';
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
+import HomePageLoggedIn from '../HomePage/HomePageLoggedIn'
+import HomePageNotLoggedIn from '../HomePage/HomePageNotLoggedIn'
+import LoginPage from '../LoginPage/LoginPage'
+import Nav from '../Nav/Nav'
+import RegisterPage from '../RegisterPage/RegisterPage'
 
-import './App.css';
+// Import the main stylesheet
+import './App.css'
 
-function App() {
+
+// Core component of our App. All views are
+// controlled via this location and components
+// are rendered based on selected routes
+export default function App() {
+
+  // Initialize the dispatch function
   const dispatch = useDispatch();
-
-  const user = useSelector(store => store.user);
-
+  // Get the user field. Updates with STATE changes
+  const user = useSelector(store => store.user)
+  // Initialize the user object, and track the STATE
+  // with changes to update that object as necessary
   useEffect(() => {
-    dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+    dispatch({ type: 'FETCH_USER' })
+  }, [dispatch])
 
   return (
     <Router>
@@ -107,6 +115,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;
-

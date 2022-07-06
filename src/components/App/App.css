@@ -4,6 +4,7 @@
   /* App color profile */
   --clr-background: hsl(0, 0%, 26%);
   --clr-font-light: hsl(0, 0%, 94%);
+  --clr-link: hsl(216, 69%, 45%);
 
   /* Font weights */
   --fw-light: 100;
@@ -28,6 +29,14 @@ header {
 header h1 {
   text-align: center;
   font-size: 226%;
+}
+
+header .logout-button-container {
+  text-align: right;
+}
+
+header .logout-button-container button {
+  display: inline-block;
 }
 
  /* The side navigation menu */
