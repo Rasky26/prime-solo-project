@@ -34,7 +34,7 @@ async function processLineByLine() {
         }
 
         // Construct the SQL insert values line from the text file
-        const formattedLine = `\t('${splitLine[0]}', '${name.trim()}', '${splitLine[2]}', '${splitLine[3]}', '${splitLine[4]}', '${splitLine[5]}', '${splitLine[6]}', '${splitLine[7]}'),
+        const formattedLine = `\t('${splitLine[0].trim()}', '${name.trim()}', '${splitLine[2].trim()}', '${splitLine[3].trim()}', '${splitLine[4].trim()}', '${splitLine[5].trim()}', '${splitLine[6].trim()}', '${splitLine[7] ? splitLine[7].trim() : 0}'),
 `
         // Append that SQL line to the existing `sqlQuery` variable
         sqlQuery += formattedLine
@@ -43,11 +43,11 @@ async function processLineByLine() {
     // Handle the header function
     else {
         // Generate the column names into the file
-        const formattedLine = `\t("station", "name", "state", "timezone", "daylight_saving", "latitude", "latitude", "longitude", "elevation")`
+        const formattedLine = `\t("station", "name", "state", "timezone", "daylight_saving", "latitude", "longitude", "elevation")`
         // Start the SQL insert lines with the core information
         sqlQuery = `INSERT INTO "asos_awos_us_locations"
-    ${formattedLine}
-VALUES (
+  ${formattedLine}
+VALUES
 `
 
       // Increment the count
@@ -65,8 +65,7 @@ VALUES (
   // Find the last comma in this giant string and replace it with the closing
   // values for our SQL insert statement
   const lastCommaIndex = sqlQuery.lastIndexOf(',')
-  sqlQuery = sqlQuery.substring(0, lastCommaIndex) + `
-);`
+  sqlQuery = sqlQuery.substring(0, lastCommaIndex) + `;`
   console.log(sqlQuery)
 
   // Write to the SQL file

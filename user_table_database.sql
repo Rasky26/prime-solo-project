@@ -39,3 +39,54 @@ CREATE TABLE "user" (
 	"email" domain_email UNIQUE NOT NULL,
 	"password" VARCHAR (1000) NOT NULL
 );
+
+
+-- Create the station location table
+CREATE TABLE "asos_awos_us_locations" (
+	"id" SERIAL PRIMARY KEY,
+	"station" VARCHAR(4) UNIQUE NOT NULL,
+	"name" VARCHAR(255),
+	"state" VARCHAR(2),
+	"timezone" VARCHAR(1),
+	"daylight_saving" VARCHAR(1),
+	"latitude" DECIMAL(9, 4) NOT NULL,
+	"longitude" DECIMAL(9, 4) NOT NULL,
+	"elevation" DECIMAL(9, 4)
+);
+
+
+-- Create the junction table for a user to have
+-- many forecast locations
+CREATE TABLE "user_forecast_locations" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INTEGER REFERENCES "user" ON DELETE CASCADE,
+	"location_id" INTEGER REFERENCES "asos_awos_us_locations" ON DELETE CASCADE
+);
+
+
+-- Create the forecast table.
+-- Add additional constraints as you deem necessary:
+CREATE TABLE "forecasts" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INTEGER REFERENCES "user" ON DELETE CASCADE,
+	"location_id" INTEGER REFERENCES "asos_awos_us_locations" ON DELETE CASCADE,
+	"forecast_for_date" DATE NOT NULL,
+	"cloud_cover" INTEGER NOT NULL,
+	"pop" INTEGER NOT NULL,
+		CHECK("pop" BETWEEN 0 AND 100),
+	"high_temp" DECIMAL(6, 2) NOT NULL,
+		CHECK ("high_temp" > 0),
+	"low_temp" DECIMAL(6, 2) NOT NULL,
+		CHECK ("low_temp" > 0),
+	"wind_speed_low" DECIMAL (5, 1) NOT NULL,
+		CHECK ("wind_speed_low" >= 0),
+	"wind_speed_high" DECIMAL (5, 1),
+		CHECK ("wind_speed_high" >= 0),
+	"wind_gust_low" DECIMAL (5, 1),
+		CHECK ("wind_gust_low" >= 0),
+	"wind_gust_high" DECIMAL (5, 1),
+		CHECK ("wind_gust_high" >= 0),
+	"wind_direction" INTEGER NOT NULL,
+		CHECK ("wind_direction" BETWEEN 0 AND 15),
+	"created_on" TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);

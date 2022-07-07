@@ -9,12 +9,6 @@ import { InputField, InputFieldHiddenValues } from '../FormikUtils/Components'
 
 
 function LoginForm() {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
-  // const errors = useSelector(store => store.errors)
-  
-  // const [passwordLengthCheck, setPasswordLengthCheck] = useState('bad')
-  // const [password]
   
   // Initialize the dispatch function
   const dispatch = useDispatch();
@@ -37,26 +31,7 @@ function LoginForm() {
       .required('Password is required'),
   }
 
-  // const login = (event) => {
-  //   event.preventDefault()
-
-  //   if (email && password) {
-  //     dispatch({
-  //       type: 'LOGIN',
-  //       payload: {
-  //         // The email field MUST still pass the key
-  //         // `username` in order to work with the
-  //         // node_module `passport_local` library!!!
-  //         username: email,
-  //         password: password,
-  //       },
-  //     });
-  //   } else {
-  //     dispatch({ type: 'LOGIN_INPUT_ERROR' })
-  //   }
-  // }; // end login
-
-
+  // Function that dispatches the login of a user
   const tryLoginUser = (values) => {
 
     dispatch({
@@ -68,20 +43,10 @@ function LoginForm() {
         username: values.email,
         password: values.password,
       },
-    });
-  // } else {
-  //   dispatch({ type: 'LOGIN_INPUT_ERROR' })
-  // }
-  //   })
+    })
   }
 
-  // const checkPasswordStrength = (e) => {
-  //   console.log("HERE!")
-  //   console.log(e.target.value)
-  // }
-
-
-
+  // Build the form to the DOM
   return (
     <Formik
       initialValues={initialValues}
@@ -106,48 +71,12 @@ function LoginForm() {
           <InputFieldHiddenValues
             label="Password"
             name="password"
-            // onBlur={checkPasswordStrength}
           />
           <button type="submit" disabled={formik.isSubmitting}>Login</button>
         </Form>
       )}
     </Formik>
-    // <form className="formPanel" onSubmit={login}>
-    //   <h2>Login</h2>
-    //   {errors.loginMessage && (
-    //     <h3 className="alert" role="alert">
-    //       {errors.loginMessage}
-    //     </h3>
-    //   )}
-    //   <div>
-    //     <label htmlFor="email">
-    //       Email:
-    //       <input
-    //         type="text"
-    //         name="email"
-    //         required
-    //         value={email}
-    //         onChange={(event) => setEmail(event.target.value)}
-    //       />
-    //     </label>
-    //   </div>
-    //   <div>
-    //     <label htmlFor="password">
-    //       Password:
-    //       <input
-    //         type="password"
-    //         name="password"
-    //         required
-    //         value={password}
-    //         onChange={(event) => setPassword(event.target.value)}
-    //       />
-    //     </label>
-    //   </div>
-    //   <div>
-    //     <input className="btn" type="submit" name="submit" value="Log In" />
-    //   </div>
-    // </form>
-  );
+  )
 }
 
 export default LoginForm;
