@@ -8,8 +8,6 @@ import * as Yup from 'yup'
 import { InputField, InputFieldHiddenValues } from '../FormikUtils/Components'
 
 function RegisterForm() {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
 
   // Initialize the dispatch function
   const dispatch = useDispatch()
@@ -60,7 +58,7 @@ function RegisterForm() {
   }
 
 
-  // Build the DOM elements
+  // Build the form to the DOM
   return (
     <Formik
       initialValues={initialValues}
