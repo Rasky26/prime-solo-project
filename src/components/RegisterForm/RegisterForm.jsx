@@ -41,9 +41,13 @@ function RegisterForm() {
       .oneOf([Yup.ref("password")], "Passwords do not match"),
   }
 
+  // Function that tracks the strength of the password
+  const passwordStrength = (passwordString) => {
+    console.log(passwordString, ">>> Come back to this later")
+  }
+
   // Attempt to register the current user
   const tryRegisterUser = (values) => {
-
     dispatch({
       type: 'REGISTER',
       payload: {
@@ -55,6 +59,8 @@ function RegisterForm() {
     })
   }
 
+
+  // Build the DOM elements
   return (
     <Formik
       initialValues={initialValues}
