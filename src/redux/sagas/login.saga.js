@@ -1,8 +1,11 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
+// Import the core libraries and functions
+import axios from 'axios'
+import { put, takeLatest } from 'redux-saga/effects'
 
-// worker Saga: will be fired on "LOGIN" actions
+
+// Saga that will be fired on "LOGIN" actions
 function* loginUser(action) {
+
   try {
     // clear any existing error on the login page
     yield put({ type: 'CLEAR_LOGIN_ERROR' });
@@ -19,7 +22,10 @@ function* loginUser(action) {
 
     // after the user has logged in
     // get the user information from the server
-    yield put({ type: 'FETCH_USER' });
+    yield put({ type: 'FETCH_USER' })
+
+    // Get the config JSON file and set to STATE
+    yield put({ type: "GET_CONFIG_FILE" })
   }
   
   catch (error) {

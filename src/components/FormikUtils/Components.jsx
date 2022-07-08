@@ -42,7 +42,6 @@ const InputFieldHiddenValues = ({ label, ...props }) => {
   // seeing their password and hiding it with dots
   const toggleShowPlainText = () => {
     setShowPlainText(!showPlainText)
-    console.log('yuppers')
   }
 
   // Build the DOM input element

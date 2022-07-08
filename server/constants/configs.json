@@ -1,0 +1,142 @@
+{
+
+  "FORECAST_FIELD_LIMITS": {
+    "LOW_TEMP_LIMIT": 166.5,
+    "HIGH_TEMP_LIMIT": 344.3,
+    "WIND_SPEED_LIMIT": 300
+  },
+  
+
+  "CLOUD_COVER_FIELDS": [
+    {
+      "id": 0,
+      "name": "Clear",
+      "description": "Clear skies",
+      "oktas": 0
+    },
+    {
+      "id": 1,
+      "name": "Mostly Clear",
+      "description": "Mostly clear with few clouds",
+      "oktas": 2
+    },
+    {
+      "id": 2,
+      "name": "Partly Cloudy",
+      "description": "A mostly even mix of sun and clouds",
+      "oktas": 4
+    },
+    {
+      "id": 3,
+      "name": "Mostly Cloudy",
+      "description": "Mostly cloudy with some sun",
+      "oktas": 6
+    },
+    {
+      "id": 4,
+      "name": "Overcast",
+      "description": "Cloudy skies",
+      "oktas": 8
+    }
+  ],
+
+
+  "WIND_DIRECTION_FIELDS": [
+    {
+      "id": 0,
+      "degress": 0,
+      "name": "north",
+      "abbreviation": "N"
+    },
+    {
+      "id": 1,
+      "degress": 22.5,
+      "name": "north-northeast",
+      "abbreviation": "NNE"
+    },
+    {
+      "id": 2,
+      "degress": 45,
+      "name": "northeast",
+      "abbreviation": "NNE"
+    },
+    {
+      "id": 3,
+      "degress": 67.5,
+      "name": "east-northeast",
+      "abbreviation": "ENE"
+    },
+    {
+      "id": 4,
+      "degress": 90,
+      "name": "east",
+      "abbreviation": "E"
+    },
+    {
+      "id": 5,
+      "degress": 112.5,
+      "name": "east-southeast",
+      "abbreviation": "ESE"
+    },
+    {
+      "id": 6,
+      "degress": 135,
+      "name": "southeast",
+      "abbreviation": "SE"
+    },
+    {
+      "id": 7,
+      "degress": 157.5,
+      "name": "south-southeast",
+      "abbreviation": "SSE"
+    },
+    {
+      "id": 8,
+      "degress": 180,
+      "name": "south",
+      "abbreviation": "S"
+    },
+    {
+      "id": 9,
+      "degress": 202.5,
+      "name": "south-southwest",
+      "abbreviation": "SSW"
+    },
+    {
+      "id": 10,
+      "degress": 225,
+      "name": "southwest",
+      "abbreviation": "SW"
+    },
+    {
+      "id": 11,
+      "degress": 247.5,
+      "name": "west-southwest",
+      "abbreviation": "WSW"
+    },
+    {
+      "id": 12,
+      "degress": 270,
+      "name": "west",
+      "abbreviation": "W"
+    },
+    {
+      "id": 13,
+      "degress": 292.5,
+      "name": "west-northwest",
+      "abbreviation": "WNW"
+    },
+    {
+      "id": 14,
+      "degress": 315,
+      "name": "northwest",
+      "abbreviation": "NW"
+    },
+    {
+      "id": 15,
+      "degress": 337.5,
+      "name": "north-northwest",
+      "abbreviation": "NNW"
+    }
+  ]
+}

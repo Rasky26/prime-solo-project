@@ -83,7 +83,6 @@ function RegisterForm() {
           <InputFieldHiddenValues
             label="Password"
             name="password"
-            // onBlur={checkPasswordStrength}
           />
           <InputFieldHiddenValues
             label="Re-Type Password"

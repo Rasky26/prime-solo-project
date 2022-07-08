@@ -13,8 +13,7 @@ export default function LoginPage() {
   // Get the current errors from REDUX state
   const errors = useSelector(store => store.errors)
 
-  console.log(errors, "this is errors")
-
+  // Build the Login page
   return (
     <div>
 
