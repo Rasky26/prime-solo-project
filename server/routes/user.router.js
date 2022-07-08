@@ -4,6 +4,8 @@ const encryptLib = require('../modules/encryption')
 const pool = require('../modules/pool')
 const userStrategy = require('../strategies/user.strategy')
 
+
+// Main router element to make requests to
 const router = express.Router()
 
 // Handles Ajax request for user information if user is authenticated
@@ -32,13 +34,49 @@ router.post('/register', (req, res, next) => {
 
   const sqlParams = [email, password]
 
-  pool
-    .query(sqlQuery, sqlParams)
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log(`User registration failed with ${err}`)
-      res.sendStatus(500)
-    });
+  // Outer POOL query
+  pool.query(sqlQuery, sqlParams)
+  // Make the query to create a new user
+  .then((result) => {
+
+      // Inner POOL query
+      //
+      // Build the "user_settings" query
+      const sqlQueryUserSettings = `
+        INSERT INTO "user_settings"
+          ("user_id")
+        VALUES
+          ($1)
+      `
+      // Set the "user_id" param
+      const sqlParamUserSettings = [
+        result.rows[0].id,
+      ]
+
+      // Check if a data was returned
+      if (result.rows) {
+        // Send the query to create a new user_setting
+        /// based on the user.id value
+        pool.query(sqlQueryUserSettings, sqlParamUserSettings)
+        // No action needed if the "user_settings" row was created
+        .then(() => {
+
+        })
+        // Catch any errors from the "user_settings" creation
+        .catch((err) => {
+          console.log(`User settings failed with ${err}`)
+          res.sendStatus(500)
+        })
+        // END of inner POOL query
+      }
+    
+      res.sendStatus(201)
+    })
+  // Catch errors on the main user creation section
+  .catch((err) => {
+    console.log(`User registration failed with ${err}`)
+    res.sendStatus(500)
+  })
 });
 
 // Handles login form authenticate/login POST

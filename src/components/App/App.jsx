@@ -25,13 +25,19 @@ import './App.css'
 export default function App() {
 
   // Initialize the dispatch function
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   // Get the user field. Updates with STATE changes
   const user = useSelector(store => store.user)
   // Initialize the user object, and track the STATE
   // with changes to update that object as necessary
   useEffect(() => {
+
+    // Fetch the current logged in user's information
     dispatch({ type: 'FETCH_USER' })
+
+    // Upon login, get the config file from the server
+    dispatch({ type: "GET_CONFIG_FILE" })
+
   }, [dispatch])
 
   return (
@@ -113,5 +119,5 @@ export default function App() {
       <Footer />
 
     </Router>
-  );
+  )
 }
