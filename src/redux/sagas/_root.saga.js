@@ -1,11 +1,12 @@
 // Import the core functions and libraries
-import { all } from 'redux-saga/effects'
+import { all } from "redux-saga/effects"
 
 // Import the used saga files
-import configSaga from './config.saga'
-import loginSaga from './login.saga'
-import registrationSaga from './registration.saga'
-import userSaga from './user.saga'
+import configSaga from "./config.saga"
+import loginSaga from "./login.saga"
+import registrationSaga from "./registration.saga"
+import userForecastLocations from "./forecastLocations.saga"
+import userSaga from "./user.saga"
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -19,6 +20,7 @@ export default function* rootSaga() {
     configSaga(),
     loginSaga(), // login saga is now registered
     registrationSaga(),
+    userForecastLocations(),
     userSaga(),
-  ]);
+  ])
 }
