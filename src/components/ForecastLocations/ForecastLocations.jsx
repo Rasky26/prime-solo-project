@@ -1,5 +1,6 @@
 // Import the used components
 import GetForecastLocations from "./ListForecastLocations/GetForecastLocations"
+import SearchForecastLocations from "./SetForecastLocations/SearchForecastLocations"
 
 // Containing component for the various location
 // components and forms that the user may need
@@ -8,8 +9,20 @@ export default function ForecastLocations() {
 
   // Build the DOM elements
   return (
-    // List of current tracked forecast locations the user
-    // has associated with their account
-    <GetForecastLocations />
+    <section>
+
+      {/*
+      List of current tracked forecast locations the user
+      has associated with their account
+      */}
+      <GetForecastLocations />
+      
+      {/* 
+      Search area for adding locations to the user's
+      stored location table
+      */}
+      <SearchForecastLocations />
+
+    </section>
   )
 }
