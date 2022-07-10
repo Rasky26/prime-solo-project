@@ -19,6 +19,7 @@ function* getConfigFile() {
     // it will end the session
     const configData = yield axios.get('/api/config', config)
 
+
     // Dispatch to the REDUX store the various fields
     // that were contained in the static config file.
     //
@@ -40,7 +41,7 @@ function* getConfigFile() {
 
 
   } catch (err) {
-    console.log(`Error with config GET: ${err}`)
+    console.log(`Error with getConfigFile GET: ${err}`)
   }
 }
 

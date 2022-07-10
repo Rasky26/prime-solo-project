@@ -1,22 +1,23 @@
 // Import the core libraries 
-import { useEffect } from 'react'
-import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from "react"
+import { HashRouter as Router, Redirect, Route, Switch } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
 
 // Import the `ProtectedRoutes` component to restrict access behind login
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute"
 
 // Import the used components
-import Footer from '../Footer/Footer'
-import Header from '../Header/Header'
-import HomePageLoggedIn from '../HomePage/HomePageLoggedIn'
-import HomePageNotLoggedIn from '../HomePage/HomePageNotLoggedIn'
-import LoginPage from '../LoginPage/LoginPage'
-import Nav from '../Nav/Nav'
-import RegisterPage from '../RegisterPage/RegisterPage'
+import Footer from "../Footer/Footer"
+import ForecastLocations from "../ForecastLocations/ForecastLocations"
+import Header from "../Header/Header"
+import HomePageLoggedIn from "../HomePage/HomePageLoggedIn"
+import HomePageNotLoggedIn from "../HomePage/HomePageNotLoggedIn"
+import LoginPage from "../LoginPage/LoginPage"
+import Nav from "../Nav/Nav"
+import RegisterPage from "../RegisterPage/RegisterPage"
 
 // Import the main stylesheet
-import './App.css'
+import "./App.css"
 
 
 // Core component of our App. All views are
@@ -32,8 +33,8 @@ export default function App() {
   // with changes to update that object as necessary
   useEffect(() => {
 
-    // Fetch the current logged in user's information
-    dispatch({ type: 'FETCH_USER' })
+    // Fetch the current logged in user"s information
+    dispatch({ type: "FETCH_USER" })
 
     // Upon login, get the config file from the server
     dispatch({ type: "GET_CONFIG_FILE" })
@@ -106,6 +107,10 @@ export default function App() {
               <HomePageNotLoggedIn />
             }
           </Route>
+
+          <ProtectedRoute path="/locations" exact>
+            <ForecastLocations />
+          </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
