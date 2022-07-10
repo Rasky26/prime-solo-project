@@ -52,6 +52,36 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 })
 
 
+// Route that allows a user to search the database
+// for any matching results
+router.get("/:searchTerm", rejectUnauthenticated, (req, res) => {
+
+  // Build the SQL query with case-independent parameters
+  const sqlQuery = `
+    SELECT *
+    FROM "asos_awos_us_locations"
+    WHERE "station" ILIKE $1
+      OR "name" ILIKE $1
+      OR "state" ILIKE $1
+    ORDER BY station;
+  `
+
+  // Allow users search for any part of the string by
+  // use the `%` around the query parameters
+  const sqlParams = [
+    `%${req.params.searchTerm}%`,
+  ]
+
+  // Make the query to the database
+  pool.query(sqlQuery, sqlParams)
+  .then((result) => res.send(result.rows))
+  .catch((err) => {
+    console.log(`Error in GET search request with ${err}`)
+    res.sendStatus(500)
+  })
+})
+
+
 // DELETE route to remove a location from the user's stored
 // location list
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
