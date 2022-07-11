@@ -2,10 +2,20 @@
 import moment from "moment"
 import { useSelector } from "react-redux"
 
+// Import the used components
+import NestedForecastHistory from "./NestedForecastHistory"
+
 
 // Component that displays the forecast history for the
-// various dates
-export default function DisplayForecastHistory({ forecastHistoryObj }) {
+// various dates.
+//
+// Takes in the current `forecastHistoryObj` that will be
+// rendered to the DOM.
+// If an array of forecast history objects is passed in via
+// the `additionalForecastHistoryArray` param, that will
+// be processed within the containing `<li>` element that
+// will keep all the dates together.
+export default function DisplayForecastHistory({ forecastHistoryObj, additionalForecastHistoryArray }) {
 
   // Get the cloud cover STORE values from REDUX
   const cloudCoverList = useSelector(store => store.config.cloudCover)
@@ -92,6 +102,13 @@ export default function DisplayForecastHistory({ forecastHistoryObj }) {
       <div>
         {forecastCreationDate}
       </div>
+      {(additionalForecastHistoryArray) ?
+        <NestedForecastHistory
+          forecastHistoryArray={additionalForecastHistoryArray}
+        />
+        :
+        null
+      }
     </li>
   )
 }
