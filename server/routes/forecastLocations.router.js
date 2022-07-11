@@ -82,6 +82,47 @@ router.get("/:searchTerm", rejectUnauthenticated, (req, res) => {
 })
 
 
+// POST route to add a new location to the user's list
+// of tracked stations
+router.post("/add-station", rejectUnauthenticated, (req, res) => {
+
+  // Get the specific user and the new station ID
+  const userId = req.user.id
+  const stationId = req.body.stationId
+
+  // Create the SQL query
+  const sqlQuery = `
+    INSERT INTO "user_forecast_locations"
+      ("user_id", "location_id")
+    VALUES
+      ($1, $2);
+  `
+
+  // Create the SQL params array
+  const sqlParams = [
+    userId,
+    stationId,
+  ]
+
+  // Send the request to the DB
+  pool.query(sqlQuery, sqlParams)
+  .then(() => res.sendStatus(201))
+  .catch((err) => {
+
+    // If the record already exists, then just send a 200 response
+    if (err.detail === `Key (user_id, location_id)=(${userId}, ${stationId}) already exists.`) {
+      res.sendStatus(200)
+    }
+    // Otherwise, an error has occurred, so log it
+    else {
+      console.log(`Error in forecastLocations "/add-station" POST with ${err}`)
+      res.sendStatus(500)
+    }
+  })
+
+})
+
+
 // DELETE route to remove a location from the user's stored
 // location list
 router.delete("/:id", rejectUnauthenticated, (req, res) => {
