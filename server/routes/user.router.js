@@ -4,9 +4,9 @@ const encryptLib = require('../modules/encryption')
 const pool = require('../modules/pool')
 const userStrategy = require('../strategies/user.strategy')
 
-
 // Main router element to make requests to
 const router = express.Router()
+
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {

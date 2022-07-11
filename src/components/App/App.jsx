@@ -8,6 +8,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute"
 
 // Import the used components
 import Footer from "../Footer/Footer"
+import ForecastHistory from "../ForecastHistory/ForecastHistory"
 import ForecastLocations from "../ForecastLocations/ForecastLocations"
 import Header from "../Header/Header"
 import HomePageLoggedIn from "../HomePage/HomePageLoggedIn"
@@ -51,33 +52,10 @@ export default function App() {
       <main>
       
         <Switch>
-          {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          {/* <Redirect from="/" to="/home" exact /> */}
-
-          {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-          {/* <ProtectedRoute
-            // logged in shows UserPage else shows LoginPage
-            exact
-            path="/user"
-          >
-            <UserPage />
-          </ProtectedRoute> */}
-
-          {/* <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute> */}
 
           <Route path="/login" exact>
             {user.id ?
-              // If the user is already logged in, 
-              // redirect to the /user page
+              // If the user is already logged in, redirect to the /user page
               <Redirect to="/" />
               :
               // Otherwise, show the login page
@@ -87,8 +65,7 @@ export default function App() {
 
           <Route path="/registration" exact>
             {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
+              // If the user is already logged in, redirect them to the /user page
               <Redirect to="/" />
               :
               // Otherwise, show the registration page
@@ -98,9 +75,7 @@ export default function App() {
 
           <Route path="/" exact>
             {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              // <Redirect to="/user" />
+              // If the user is already logged in, redirect them to the /user page
               <HomePageLoggedIn />
               :
               // Otherwise, show the Landing page
@@ -110,6 +85,10 @@ export default function App() {
 
           <ProtectedRoute path="/locations" exact>
             <ForecastLocations />
+          </ProtectedRoute>
+
+          <ProtectedRoute path="/history" exact>
+            <ForecastHistory />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

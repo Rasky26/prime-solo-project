@@ -8,7 +8,6 @@ const userStrategy = require('../strategies/user.strategy')
 // Import the static config file
 const configFile = require('../constants/configs.json')
 
-
 // Main router element to make requests to
 const router = express.Router()
 

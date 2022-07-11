@@ -6,7 +6,6 @@ const pool = require('../modules/pool')
 const userStrategy = require('../strategies/user.strategy')
 const { route } = require('./user.router')
 
-
 // Main router element to make requests to
 const router = express.Router()
 

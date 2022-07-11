@@ -61,9 +61,6 @@ function* logoutUser(action) {
     // the client-side code know the user is logged out
     yield put({ type: 'UNSET_USER' })
 
-    // Unset the config JSON file from STATE
-    yield put({ type: "UNSET_CONFIG_FILE" })
-
   } catch (error) {
     console.log('Error with user logout:', error);
   }
