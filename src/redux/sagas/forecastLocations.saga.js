@@ -3,6 +3,34 @@ import axios from "axios"
 import { put, takeLatest } from "redux-saga/effects"
 
 
+// Function that adds a station to the user's tracked
+// list
+function* addStationToUserStationList(action) {
+
+  console.log("ADD STATION", action)
+
+  // Build the headers to send along with the server request
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    }
+
+    // Send the POST request to the server
+    yield axios.post('/api/forecast-locations/add-station', action.payload, config)
+
+
+    // Update the user's station list
+    yield put({
+      type: 'GET_USER_FORECAST_LOCATION_LIST',
+    })
+
+  // If errors occur, log them to the console
+  } catch (err) {
+    console.log(`Error with addStationToUserStationList POST: ${err}`)
+  }
+}
+
 // Function that handles getting the user's tracked
 // locations form the server
 function* getUserForecastLocationList() {
@@ -37,8 +65,6 @@ function* getUserForecastLocationList() {
 // user's stored location DB table
 function* removeUserForecastLocation(action) {
 
-  console.log(">>>>>>>>>>>>>", action)
-
   // Build the headers to send along with the server request
   try {
     const config = {
@@ -64,6 +90,7 @@ function* removeUserForecastLocation(action) {
 
 // Get the user's forecast location array from the server
 function* userForecastLocations() {
+  yield takeLatest("ADD_STATION_TO_USER_STATION_LIST", addStationToUserStationList)
   yield takeLatest("GET_USER_FORECAST_LOCATION_LIST", getUserForecastLocationList)
   yield takeLatest("REMOVE_USER_FORECAST_STATION", removeUserForecastLocation)
 }
