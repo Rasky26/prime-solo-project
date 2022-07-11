@@ -14,7 +14,8 @@ export default function NestedForecastHistory({ forecastHistoryArray }) {
         {forecastHistoryArray.map(forecastHistoryObj => (
           <DisplayForecastHistory
             key={forecastHistoryObj.id}
-            forecastHistoryObj={forecastHistoryObj}  
+            forecastHistoryObj={forecastHistoryObj}
+            additionalForecastHistoryArray={[]}
           />
         ))}
       </ul>

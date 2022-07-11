@@ -21,9 +21,9 @@ export default function GetForecastLocations() {
     })
   }, [])
 
+  // Get a list of the current user's forecast locations from
+  // the REDUX store
   const userForecastLocations = useSelector(store => store.forecastLocations.userForecastLocationList)
-
-  console.log(">>>>>>>>>>>.", userForecastLocations)
 
 
   // Build the DOM elements

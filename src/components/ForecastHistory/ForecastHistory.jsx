@@ -3,8 +3,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 // Import the used components
-import DisplayForecastHistory from "./DisplayForecastHistory"
-import NestedForecastHistory from "./NestedForecastHistory"
+import ForecastDayComponent from "./ForecastDayComponent"
 
 
 // Component that shows the forecast history of the
@@ -43,32 +42,19 @@ export default function ForecastHistory() {
     )
   )
 
-  nestedForecastHistoryArray.map(forecastDateArray => {
-    console.log(forecastDateArray[0])
-  })
 
-
-  // Build the DOM elements
+  // Build the DOM elements by sending one day's array filled with forecast
+  // history objects. Each day will be processed within the top-level
+  // `<ul>` element.
   return (
     <section>
       <ul>
-        {nestedForecastHistoryArray.map(forecastDateArr => {
-          // Split off the first element, but retain the others
-          let [first, ...others] = forecastDateArr
-
-          // Build the DOM elements from that separated list
-          return (
-          <>
-            <DisplayForecastHistory
-              key={first.id}
-              forecastHistoryObj={first}  
-            />
-            <NestedForecastHistory
-              forecastHistoryArray={others}
-            />
-          </>
-          )
-        })}
+        {nestedForecastHistoryArray.map(forecastHistoryArray => 
+          <ForecastDayComponent
+            key={forecastHistoryArray[0].forecast_for_date}
+            forecastHistoryArray={forecastHistoryArray}
+          />
+        )}
       </ul>
     </section>
   )
