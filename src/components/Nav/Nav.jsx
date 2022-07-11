@@ -20,7 +20,7 @@ export default function Nav() {
 
       {user.id ?
         // If the user is logged in, allow them to navigate to the forecast section
-        <Link className="nav-link" to="/forecast">
+        <Link className="nav-link" to="/">
           Forecast
         </Link>
         :
