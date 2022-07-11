@@ -7,7 +7,7 @@ const cloudCover = (state = [], action) => {
   switch (action.type) {
     case "SET_CLOUD_COVER_ARRAY":
       return action.payload
-    case "UNSET_CONFIG_FILE":
+    case "UNSET_USER":
       return []
     default:
       return state
@@ -21,7 +21,7 @@ const forecastFieldLimits = (state = {}, action) => {
   switch (action.type) {
     case "SET_FORECAST_FIELD_LIMITS":
       return action.payload
-    case "UNSET_CONFIG_FILE":
+    case "UNSET_USER":
       return {}
     default:
       return state
@@ -34,7 +34,7 @@ const windDirection = (state = [], action) => {
   switch (action.type) {
     case "SET_WIND_DIRECTION_ARRAY":
       return action.payload
-    case "UNSET_CONFIG_FILE":
+    case "UNSET_USER":
       return []
     default:
       return state

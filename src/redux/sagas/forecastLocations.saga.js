@@ -7,8 +7,6 @@ import { put, takeLatest } from "redux-saga/effects"
 // list
 function* addStationToUserStationList(action) {
 
-  console.log("ADD STATION", action)
-
   // Build the headers to send along with the server request
   try {
     const config = {

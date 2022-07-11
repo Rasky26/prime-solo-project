@@ -2,12 +2,12 @@
 import { combineReducers } from "redux"
 
 
-// Reducer to store the various forecasting locations
-// the user has set to track
-const userForecastLocationList = (state = [], action) => {
+// Reducer to store the various forecasts made by the
+// user over the past two weeks
+const userForecastHistory = (state = [], action) => {
 
   switch (action.type) {
-    case "SET_USER_FORECAST_LOCATION_LIST":
+    case "SET_USER_FORECAST_HISTORY":
       return action.payload
     case "UNSET_USER":
       return []
@@ -19,5 +19,5 @@ const userForecastLocationList = (state = [], action) => {
 
 // Export the various STATE values set above
 export default combineReducers({ 
-  userForecastLocationList, // List of all tracked forecast stations
+    userForecastHistory, // List of all user forecasts from the past two weeks
 })

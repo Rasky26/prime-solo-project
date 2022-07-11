@@ -21,7 +21,7 @@ export default function GetForecastLocations() {
     })
   }, [])
 
-  const userForecastLocations = useSelector(store => store.userForecastLocations.userForecastLocationList)
+  const userForecastLocations = useSelector(store => store.forecastLocations.userForecastLocationList)
 
   console.log(">>>>>>>>>>>.", userForecastLocations)
 
