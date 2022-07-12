@@ -1,4 +1,4 @@
-// GET_USER_FORECAST_HISTORY// Import the core libraries and functions
+// Import the core libraries and functions
 import axios from "axios"
 import { put, takeLatest } from "redux-saga/effects"
 

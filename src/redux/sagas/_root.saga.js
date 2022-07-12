@@ -5,6 +5,7 @@ import { all } from "redux-saga/effects"
 import configSaga from "./config.saga"
 import loginSaga from "./login.saga"
 import registrationSaga from "./registration.saga"
+import userForecastCreation from "./forecastCreation.saga"
 import userForecastHistory from "./forecastHistory.saga"
 import userForecastLocations from "./forecastLocations.saga"
 import userSaga from "./user.saga"
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     configSaga(),
     loginSaga(), // login saga is now registered
     registrationSaga(),
+    userForecastCreation(),
     userForecastHistory(),
     userForecastLocations(),
     userSaga(),

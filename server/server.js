@@ -9,6 +9,7 @@ const passport = require("./strategies/user.strategy");
 
 // Utilized routes and endpoints
 const configRouter = require("./routes/config.router")
+const forecastCreation = require("./routes/forecastCreation.router")
 const forecastHistory = require("./routes/forecastHistory.router")
 const forecastLocations = require("./routes/forecastLocations.router")
 const userRouter = require("./routes/user.router")
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use("/api/config", configRouter)
+app.use("/api/forecast-creation", forecastCreation)
 app.use("/api/forecast-history", forecastHistory)
 app.use("/api/forecast-locations", forecastLocations)
 app.use("/api/user", userRouter)

@@ -91,3 +91,15 @@ main {
   /* For handling the display of the side navbar */
   transition: margin-left .5s;
 }
+
+.forecast-history-line {
+  display: grid;
+}
+
+.forecast-history-line > div {
+  width: 100px;
+}
+
+.sub-history-line :nth-child(even){
+  background-color: gray;
+}
