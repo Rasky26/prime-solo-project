@@ -1,19 +1,20 @@
 // Import the core libraries and components
 import * as Yup from 'yup'
+import { format } from 'date-fns'
 import { Form, Formik, useFormikContext } from 'formik'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 // Import the used components
-import { InputField, Selection } from '../FormikUtils/Components'
+import { InputField, Selection } from '../../FormikUtils/Components'
 
 // Import utility functions
-import { kelvinToCelsius, kelvinToFahrenheit } from '../Utilities/TemperatureConversion'
+import { kelvinToCelsius, kelvinToFahrenheit } from '../../Utilities/TemperatureConversion'
 
 
 // Component that handles the building and handling of each day's
 // forecast forms
-function ForecastForm() {
+function ForecastForm({ locationId, forecastDate }) {
 
   // Set the forecast limits in local STATE
   // const [lowTemperatureLimit, setLowTemperatureLimit] = useState(-Infinity)
@@ -98,15 +99,16 @@ function ForecastForm() {
 
 
   return (
-    <div>Here is my form
+    <div>
+      <h3>{format(forecastDate, "E. MMM dd, yyyy")}</h3>
       <Formik
         initialValues={initialValues}
         validationSchema={Yup.object(validationSchema)}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              handleFormSave(values)
-              setSubmitting(false);
+            alert(JSON.stringify(values, null, 2));
+            handleFormSave(values)
+            setSubmitting(false);
           }, 400);
       }}
       >

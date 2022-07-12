@@ -23,9 +23,6 @@ function* loginUser(action) {
     // after the user has logged in
     // get the user information from the server
     yield put({ type: 'FETCH_USER' })
-
-    // Get the config JSON file and set to STATE
-    yield put({ type: "GET_CONFIG_FILE" })
   }
   
   catch (error) {

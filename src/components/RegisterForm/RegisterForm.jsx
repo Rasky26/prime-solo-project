@@ -64,13 +64,13 @@ function RegisterForm() {
       initialValues={initialValues}
       validationSchema={Yup.object(validationSchema)}
       onSubmit={(values, actions) => {
-          setTimeout(() => {
-              // Attempt to log the user in
-              tryRegisterUser(values)
-              // Use this field to diable the login button
-              actions.setSubmitting(false)
-              actions.resetForm()
-          }, 400);
+        setTimeout(() => {
+          // Attempt to log the user in
+          tryRegisterUser(values)
+          // Use this field to diable the login button
+          actions.setSubmitting(false)
+          actions.resetForm()
+        }, 400);
       }}
     >
       {formik => (

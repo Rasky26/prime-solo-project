@@ -1,5 +1,5 @@
 // Import the core libraries and functions
-import moment from "moment"
+import { format } from "date-fns"
 import { useSelector } from "react-redux"
 
 // Import the used components
@@ -57,7 +57,8 @@ export default function DisplayForecastHistory({ forecastHistoryObj, additionalF
   // Initialize all the output text values
   //
   // Build the `forecast_for_date` string
-  const forecastForDate = moment(forecastHistoryObj.forecast_for_date).format('dddd, MMM Do YYYY')
+  // date-fns REF: https://date-fns.org/v2.24.0/docs/format
+  const forecastForDate = format(new Date(forecastHistoryObj.forecast_for_date), "E. MMM dd, yyyy")
   // Set the high and low temperature fields
   const highTemp = `${Math.round(forecastHistoryObj.high_temp)}°F`
   const lowTemp = `${Math.round(forecastHistoryObj.low_temp)}°F`
@@ -75,7 +76,8 @@ export default function DisplayForecastHistory({ forecastHistoryObj, additionalF
   // Get the wind direction
   const windDirection = windDirectionList.find(wind => wind.id === forecastHistoryObj.wind_direction).abbreviation
   // String stating when the forecast was created
-  const forecastCreationDate = moment(forecastHistoryObj.created_on).calendar()
+  const forecastCreationDate = format(new Date(forecastHistoryObj.created_on), "MMM dd, yyyy @ h:mmbb")
+  // -------------------------------------------------------
 
 
   // Build the DOM elements
