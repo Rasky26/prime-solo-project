@@ -14,6 +14,7 @@ export default function Nav() {
   // pending to be created for the day.
   // const user = useSelector((store) => store.user);
 
+  
   // Build the DOM elements for the side navigation bar
   return (
     <nav>
