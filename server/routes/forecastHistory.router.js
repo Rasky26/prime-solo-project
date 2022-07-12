@@ -1,10 +1,7 @@
 // Import the core libraries and functions
 const express = require('express')
 const { rejectUnauthenticated } = require('../modules/authentication-middleware')
-const encryptLib = require('../modules/encryption')
 const pool = require('../modules/pool')
-const userStrategy = require('../strategies/user.strategy')
-const { route } = require('./user.router')
 
 // Main router element to make requests to
 const router = express.Router()
@@ -16,7 +13,21 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
   // Build the SQL query
   const sqlQuery = `
-    SELECT * FROM "forecasts"
+    SELECT
+      "id",
+      "location_id",
+      "forecast_for_date",
+      "cloud_cover",
+      "pop",
+      "high_temp",
+      "low_temp",
+      "wind_speed_low",
+      "wind_speed_high",
+      "wind_gust_low",
+      "wind_gust_high",
+      "wind_direction",
+      "created_on"
+    FROM "forecasts"
     WHERE "user_id" = $1
       AND "forecast_for_date" > (CURRENT_DATE - INTERVAL '14 days')
     ORDER BY

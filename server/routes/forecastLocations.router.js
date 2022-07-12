@@ -1,10 +1,7 @@
 // Import the core libraries and functions
 const express = require('express')
 const { rejectUnauthenticated } = require('../modules/authentication-middleware')
-const encryptLib = require('../modules/encryption')
 const pool = require('../modules/pool')
-const userStrategy = require('../strategies/user.strategy')
-const { route } = require('./user.router')
 
 // Main router element to make requests to
 const router = express.Router()
@@ -118,7 +115,6 @@ router.post("/add-station", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500)
     }
   })
-
 })
 
 

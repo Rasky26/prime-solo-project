@@ -16,7 +16,7 @@ export default function ForecastFormForDates({ locationId }) {
   // Get the current local datetime
   const startDate = new Date()
   // Create an array of the next seven days
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 1; i++) {
     let newDate = new Date(startDate)
     newDate.setDate(newDate.getDate() + i)
     forecastingDateRange.push(newDate)
