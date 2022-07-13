@@ -7,8 +7,6 @@ import { put, takeLatest } from "redux-saga/effects"
 // from the current user from the last two weeks
 function* getUserForecastHistory() {
 
-  console.log("In getUserForecastHistory")
-
   // Build the headers to send along with the server request
   try {
     const config = {
