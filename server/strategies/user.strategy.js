@@ -13,7 +13,12 @@ passport.deserializeUser((id, done) => {
 
   // Query returns BOTH the user AND user_settings
   const sqlQuery = `
-    SELECT *
+    SELECT
+      "user"."id",
+      "user_settings"."id" AS "user_settings_id",
+      "user"."email",
+      "user_settings"."metric",
+      "user_settings"."localization"
     FROM "user"
     JOIN "user_settings"
       ON "user".id = user_settings.user_id

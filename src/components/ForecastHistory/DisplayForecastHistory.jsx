@@ -6,7 +6,6 @@ import { useSelector } from "react-redux"
 import NestedForecastHistory from "./NestedForecastHistory"
 
 // Import utility functions
-import buildWindSpeedString from "../Utilities/CreateWindSpeedString"
 import setForecastFieldsForDisplay from "../Utilities/FormatForecastFields"
 
 
@@ -57,7 +56,7 @@ export default function DisplayForecastHistory({ forecastHistoryObj, additionalF
           {forecastForDisplay.windString}
         </div>
         <div>
-          {forecastForDisplay.forecastCreationDate}
+          {forecastForDisplay.forecastCreationDateTime}
         </div>
         {(additionalForecastHistoryArray) ?
           <NestedForecastHistory
