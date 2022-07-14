@@ -154,13 +154,20 @@ function ForecastForm({ locationId, forecastDate }) {
   //   return null
   // }
 
-  // const dummyListener = (value) => {
-  //   console.log("In the dummy listner")
-  // }
+  const dummyListener = (value) => {
+    console.log("In the dummy listner")
+    console.log(value)
+  }
+
+  const anotherDummyListener = (value) => {
+    console.log("In another dummy listner")
+    console.log(value)
+  }
 
 
   return (
     <div>
+      <img src={cloudCover[2].image} alt="" />
       <h3>{format(forecastDate, "E. MMM dd, yyyy")}</h3>
       <Formik
         initialValues={initialValues}
@@ -170,7 +177,7 @@ function ForecastForm({ locationId, forecastDate }) {
           // setTimeout(() => {
             // alert(JSON.stringify(forecastValues, null, 2));
           handleFormSave(forecastValues)
-          setSubmitting(false);
+          setSubmitting(false)
           // }, 400);
       }}
       >
@@ -187,13 +194,14 @@ function ForecastForm({ locationId, forecastDate }) {
             label="PoP %"
             name="pop"
             type="text"
-            // onBlur={dummyListener}
+            onFocus={e => anotherDummyListener(e.target.name)}
+            onBlur={dummyListener}
           />
           <InputField
             label="Max"
             name="high_temp"
             type="text"
-            // onBlur={e => dummyListener(e.target.value)}
+            onBlur={e => dummyListener(e.target.name)}
           />
           <InputField
             label="Min"
@@ -223,27 +231,6 @@ function ForecastForm({ locationId, forecastDate }) {
             // Pass in the formik props
             formik={formik}
           />
-
-          {/* {lastForecast.map(forecastValues => (
-            <button
-              key={forecastValues.id}
-              type="button"
-              onClick={() => {
-                // Set the initialValues to the previous forecast
-                populateFormWithPreviousForecast(forecastValues)
-                // Reset the Formik Form
-                formik.resetForm()}}
-            >
-
-              <DisplayFullPastForecast
-                populateFormWithPreviousForecast={populateFormWithPreviousForecast}
-                forecastValues={forecastValues}
-                locationId={locationId}
-                forecastDate={forecastDate}
-              />
-
-            </button>
-          ))} */}
         </Form>
         }
       </Formik>
