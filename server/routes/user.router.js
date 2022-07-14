@@ -59,9 +59,7 @@ router.post('/register', (req, res, next) => {
         /// based on the user.id value
         pool.query(sqlQueryUserSettings, sqlParamUserSettings)
         // No action needed if the "user_settings" row was created
-        .then(() => {
-
-        })
+        .then(() => {})
         // Catch any errors from the "user_settings" creation
         .catch((err) => {
           console.log(`User settings failed with ${err}`)

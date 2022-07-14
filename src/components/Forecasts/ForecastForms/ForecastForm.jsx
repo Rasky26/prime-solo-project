@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux"
 // Import the used components
 import { InputField, Selection } from "../../FormikUtils/Components"
 import DisplayFullPreviousForecasts from "../PreviousForecasts/DisplayFullPreviousForecasts"
+import DisplayVariableFromPreviousForecast from "../PreviousForecasts/DisplayVariableFromPreviousForecast"
 
 // Import utility functions
 import buildWindSpeedString from "../../Utilities/CreateWindSpeedString"
@@ -29,6 +30,7 @@ function ForecastForm({ locationId, forecastDate }) {
   const [lowTempState, setLowTempState] = useState("")
   const [windSpeedState, setWindSpeedState] = useState("")
   const [windDirectionState, setWindDirectionState] = useState("")
+  const [currentInputName, setCurrentInputName] = useState("")
 
   // Get the array of available cloud cover selections
   const cloudCover = useSelector(store => store.config.cloudCover)
@@ -36,12 +38,6 @@ function ForecastForm({ locationId, forecastDate }) {
   const forecastLimits = useSelector(store => store.config.forecastFieldLimits)
   // Get the array of available wind directions
   const windDirection = useSelector(store => store.config.windDirection)
-  // Get any historical forecast values for the user, locationId, & forecastDate
-  // limited to the last four entries
-  const lastForecast = useSelector(store => store.forecastHistory.userForecastHistory
-    .filter(forecast => Number(forecast.location_id) === Number(locationId))
-    .filter(forecast => format(new Date(forecast.forecast_for_date), "yyyy-MM-dd") === format(forecastDate, "yyyy-MM-dd"))
-  ).slice(0, 4)
 
   // Set the initial values for the form
   const initialValues = {
@@ -52,7 +48,6 @@ function ForecastForm({ locationId, forecastDate }) {
     wind_speed: windSpeedState,
     wind_direction: windDirectionState,
   }
-
 
   // Set validation schemes for each variable
   const validationSchema = {
@@ -144,6 +139,13 @@ function ForecastForm({ locationId, forecastDate }) {
     setWindDirectionState(forecastValues.wind_direction)
   }
 
+  // Function that handles pushing the a specific forecast
+  // value into the target input field
+  const pushSpecificValueToInput = (forecastValue) => {
+    
+    console.log(forecastValue)
+  }
+
   // REF: https://javascript.plainenglish.io/how-to-listen-to-formik-onchange-event-in-react-df00c4d09be
   // Option #2
   // const FormObserver = () => {
@@ -154,14 +156,14 @@ function ForecastForm({ locationId, forecastDate }) {
   //   return null
   // }
 
-  const dummyListener = (value) => {
-    console.log("In the dummy listner")
-    console.log(value)
+  const onBlurListener = (value) => {
+    // console.log(`In the Blur listener with ${value}`)
+    setCurrentInputName("")
   }
 
-  const anotherDummyListener = (value) => {
-    console.log("In another dummy listner")
-    console.log(value)
+  const onFocusListener = (value) => {
+    // console.log(`In the Focus listener with ${value}`)
+    setCurrentInputName(value)
   }
 
 
@@ -184,7 +186,12 @@ function ForecastForm({ locationId, forecastDate }) {
         {formik => 
         <Form>
           {/* <FormObserver /> */}
-          <Selection label="Cloud Cover" name="cloud_cover">
+          <Selection
+            label="Cloud Cover"
+            name="cloud_cover"
+            onFocus={e => onFocusListener(e.target.name)}
+            onBlur={e => onBlurListener(e.target.name)}
+          >
             <option value='-1'></option>
             {cloudCover.map(cloud => (
               <option key={cloud.id} value={cloud.id}>{cloud.name}</option>
@@ -194,26 +201,36 @@ function ForecastForm({ locationId, forecastDate }) {
             label="PoP %"
             name="pop"
             type="text"
-            onFocus={e => anotherDummyListener(e.target.name)}
-            onBlur={dummyListener}
+            onFocus={e => onFocusListener(e.target.name)}
+            onBlur={e => onBlurListener(e.target.name)}
           />
           <InputField
             label="Max"
             name="high_temp"
             type="text"
-            onBlur={e => dummyListener(e.target.name)}
+            onFocus={e => onFocusListener(e.target.name)}
+            onBlur={e => onBlurListener(e.target.name)}
           />
           <InputField
             label="Min"
             name="low_temp"
             type="text"
+            onFocus={e => onFocusListener(e.target.name)}
+            onBlur={e => onBlurListener(e.target.name)}
           />
           <InputField
             label="Wind Speed"
             name="wind_speed"
             type="text"
+            onFocus={e => onFocusListener(e.target.name)}
+            onBlur={e => onBlurListener(e.target.name)}
           />
-          <Selection label="Wind Direction" name="wind_direction">
+          <Selection
+            label="Wind Direction"
+            name="wind_direction"
+            onFocus={e => onFocusListener(e.target.name)}
+            onBlur={e => onBlurListener(e.target.name)}
+          >
             <option value="-1"></option>
             {windDirection.map(wind => (
               <option key={wind.id} value={wind.id}>{wind.abbreviation}</option>
@@ -231,6 +248,21 @@ function ForecastForm({ locationId, forecastDate }) {
             // Pass in the formik props
             formik={formik}
           />
+
+          {currentInputName ?
+            <DisplayVariableFromPreviousForecast
+              // Drill down the function to populate the specific local state
+              pushSpecificValueToInput={pushSpecificValueToInput}
+              // Send the forecast-specific values
+              locationId={locationId}
+              forecastDate={forecastDate}
+              // Send the target input name
+              currentInputName={currentInputName}
+            />
+            :
+            null
+          }
+
         </Form>
         }
       </Formik>

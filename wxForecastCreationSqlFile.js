@@ -18,7 +18,7 @@ const stationIds = [515, 1190, 1236]
 // Reference temperatures, precipitation, and cloud cover values
 const refTemperatureArray = [83, 86, 89, 97, 81, 83, 82, 77, 87, 90, 74, 80, 86]
 const refPrecipArray = [4, 9, 1, 1, 1, 3, 2, 1, 1, 1, 7, 4, 1]
-const refCloudCover = [4, 5, 1, 0, 1, 2, 1, 1, 4, 3, 5, 2, 1]
+const refCloudCover = [3, 4, 1, 0, 1, 2, 1, 1, 3, 2, 4, 2, 1]
 
 // Lazy-man's loop counter
 let mainCount = 0
