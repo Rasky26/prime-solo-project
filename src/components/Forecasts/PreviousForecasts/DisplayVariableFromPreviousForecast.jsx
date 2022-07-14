@@ -9,5 +9,8 @@ export default function DisplayVariableFromPreviousForecast() {
     const forecastFieldHistory = useSelector(store => store.userForecastHistory.userForecastHistory)
 
     // Buid the DOM elements
-    return (<></>)
+    return (
+      <>
+      </>
+    )
 }

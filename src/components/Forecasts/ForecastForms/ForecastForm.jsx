@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 // Import the used components
 import { InputField, Selection } from "../../FormikUtils/Components"
-import DisplayFullPastForecast from "../PreviousForecasts/DisplayFullPreviousForecasts"
+import DisplayFullPreviousForecasts from "../PreviousForecasts/DisplayFullPreviousForecasts"
 
 // Import utility functions
 import buildWindSpeedString from "../../Utilities/CreateWindSpeedString"
@@ -211,9 +211,20 @@ function ForecastForm({ locationId, forecastDate }) {
               <option key={wind.id} value={wind.id}>{wind.abbreviation}</option>
             ))}
           </Selection>
+
           <button type="submit">Submit</button>
 
-          {lastForecast.map(forecastValues => (
+          <DisplayFullPreviousForecasts
+            // Drill down the function to populate local state
+            populateFormWithPreviousForecast={populateFormWithPreviousForecast}
+            // Send the forecast-specific values
+            locationId={locationId}
+            forecastDate={forecastDate}
+            // Pass in the formik props
+            formik={formik}
+          />
+
+          {/* {lastForecast.map(forecastValues => (
             <button
               key={forecastValues.id}
               type="button"
@@ -225,11 +236,14 @@ function ForecastForm({ locationId, forecastDate }) {
             >
 
               <DisplayFullPastForecast
+                populateFormWithPreviousForecast={populateFormWithPreviousForecast}
                 forecastValues={forecastValues}
+                locationId={locationId}
+                forecastDate={forecastDate}
               />
 
             </button>
-          ))}
+          ))} */}
         </Form>
         }
       </Formik>
