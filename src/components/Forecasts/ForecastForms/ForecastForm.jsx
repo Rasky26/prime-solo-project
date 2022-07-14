@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 // Import the used components
 import { InputField, Selection } from "../../FormikUtils/Components"
+import DisplayFullPastForecast from "../PreviousForecasts/DisplayFullPreviousForecasts"
 
 // Import utility functions
 import buildWindSpeedString from "../../Utilities/CreateWindSpeedString"
@@ -41,7 +42,6 @@ function ForecastForm({ locationId, forecastDate }) {
     .filter(forecast => Number(forecast.location_id) === Number(locationId))
     .filter(forecast => format(new Date(forecast.forecast_for_date), "yyyy-MM-dd") === format(forecastDate, "yyyy-MM-dd"))
   ).slice(0, 4)
-
 
   // Set the initial values for the form
   const initialValues = {
@@ -98,26 +98,22 @@ function ForecastForm({ locationId, forecastDate }) {
     let sixHourTimeCheck = new Date()
     sixHourTimeCheck.setHours(sixHourTimeCheck.getHours() - 6)
 
-    // PUT route:
+    // PUT route: check if the forecast was made in the last six (6) horus
     if (sixHourTimeCheck < new Date(createdOn)) {
-      console.log("This is update!")
 
       // Set the forecastId with the values to be dispatched
       forecastValues.id = forecastId
-
-      console.log(forecastValues)
 
       dispatch({
         type: "UPDATE_EXISTING_FORECAST_IN_DATABASE",
         payload: forecastValues,
       })
 
+      // Exit the function after dispatching the PUT request
       return
     }
 
     // Otherwise, treat the forecast as a POST
-    console.log("This is new")
-
     // Send the REDUX dispatch message
     dispatch({
       type: "SAVE_NEW_FORECAST_TO_DATABASE",
@@ -127,26 +123,25 @@ function ForecastForm({ locationId, forecastDate }) {
 
   // Function that allows the user to populate the forecast inputs
   // with their prior forecast input values
-  const populateFormWithPreviousForecast = () => {
+  const populateFormWithPreviousForecast = (forecastValues) => {
 
-    // Secondary check to make sure a previous forecast exists
-    if (lastForecast.length) {
-      setForecastId(lastForecast[0].id)
-      setCreatedOn(lastForecast[0].created_on)
-      setCloudCoverState(lastForecast[0].cloud_cover)
-      setPopState(lastForecast[0].pop)
-      setHighTempState(Math.round(lastForecast[0].high_temp))
-      setLowTempState(Math.round(lastForecast[0].low_temp))
-      setWindSpeedState(
-        buildWindSpeedString(
-          lastForecast[0].wind_speed_low,
-          lastForecast[0].wind_speed_high,
-          lastForecast[0].wind_gust_low,
-          lastForecast[0].wind_gust_high
-        )
+    // Update the initial form state values with the
+    // selected values the user choose
+    setForecastId(forecastValues.id)
+    setCreatedOn(forecastValues.created_on)
+    setCloudCoverState(forecastValues.cloud_cover)
+    setPopState(forecastValues.pop)
+    setHighTempState(Math.round(forecastValues.high_temp))
+    setLowTempState(Math.round(forecastValues.low_temp))
+    setWindSpeedState(
+      buildWindSpeedString(
+        forecastValues.wind_speed_low,
+        forecastValues.wind_speed_high,
+        forecastValues.wind_gust_low,
+        forecastValues.wind_gust_high,
       )
-      setWindDirectionState(lastForecast[0].wind_direction)
-    }
+    )
+    setWindDirectionState(forecastValues.wind_direction)
   }
 
   // REF: https://javascript.plainenglish.io/how-to-listen-to-formik-onchange-event-in-react-df00c4d09be
@@ -192,10 +187,6 @@ function ForecastForm({ locationId, forecastDate }) {
             label="PoP %"
             name="pop"
             type="text"
-            // onChange={e => setForecastForDate(
-            //   {...forecastForDate, pop: e.target.value})
-            // }
-            // onChange={formik.handleChange}
             // onBlur={dummyListener}
           />
           <InputField
@@ -222,22 +213,23 @@ function ForecastForm({ locationId, forecastDate }) {
           </Selection>
           <button type="submit">Submit</button>
 
-          {(lastForecast.length) ?
-            // If a previous forecast exists...
-            <div>
-              <button type="button" onClick={() => {
+          {lastForecast.map(forecastValues => (
+            <button
+              key={forecastValues.id}
+              type="button"
+              onClick={() => {
                 // Set the initialValues to the previous forecast
-                populateFormWithPreviousForecast()
+                populateFormWithPreviousForecast(forecastValues)
                 // Reset the Formik Form
                 formik.resetForm()}}
-              >
-                ^
-              </button>
-              <p>Use last forecast</p>
-            </div>
-            :
-            null
-          }
+            >
+
+              <DisplayFullPastForecast
+                forecastValues={forecastValues}
+              />
+
+            </button>
+          ))}
         </Form>
         }
       </Formik>

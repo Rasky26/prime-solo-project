@@ -15,8 +15,8 @@ const forecastLocations = require("./routes/forecastLocations.router")
 const userRouter = require("./routes/user.router")
 
 // Body parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // Passport Session Configuration //
 app.use(sessionMiddleware);

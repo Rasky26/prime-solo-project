@@ -15,31 +15,36 @@
       "id": 0,
       "name": "Clear",
       "description": "Clear skies",
-      "oktas": 0
+      "oktas": 0,
+      "image": "../images/cloud_icons/clear.svg"
     },
     {
       "id": 1,
       "name": "Mostly Clear",
       "description": "Mostly clear with few clouds",
-      "oktas": 2
+      "oktas": 2,
+      "image": "../images/cloud_icons/mostly-clear.svg"
     },
     {
       "id": 2,
       "name": "Partly Cloudy",
       "description": "A mostly even mix of sun and clouds",
-      "oktas": 4
+      "oktas": 4,
+      "image": "../images/cloud_icons/partly-cloudy.svg"
     },
     {
       "id": 3,
       "name": "Mostly Cloudy",
       "description": "Mostly cloudy with some sun",
-      "oktas": 6
+      "oktas": 6,
+      "image": "../images/cloud_icons/mostly-cloudy.svg"
     },
     {
       "id": 4,
       "name": "Overcast",
       "description": "Cloudy skies",
-      "oktas": 8
+      "oktas": 8,
+      "image": "../images/cloud_icons/cloudy.svg"
     }
   ],
 

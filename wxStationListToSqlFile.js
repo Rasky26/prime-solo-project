@@ -60,13 +60,11 @@ VALUES
     }  
   }
 
-  console.log(sqlQuery)
-
   // Find the last comma in this giant string and replace it with the closing
   // values for our SQL insert statement
   const lastCommaIndex = sqlQuery.lastIndexOf(',')
   sqlQuery = sqlQuery.substring(0, lastCommaIndex) + `;`
-  console.log(sqlQuery)
+
 
   // Write to the SQL file
   fs.writeFile(

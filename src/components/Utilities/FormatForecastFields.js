@@ -41,7 +41,11 @@ function setForecastFieldsForDisplay (forecastObj) {
     windDirection: windDirectionList.find(wind => wind.id === forecastObj.wind_direction).abbreviation,
 
     // String stating when the forecast was created
-    forecastCreationDate: format(new Date(forecastObj.created_on), "MMM dd, yyyy @ h:mmbb")
+    forecastCreationDateTime: format(new Date(forecastObj.created_on), "MMM dd, yyyy - h:mm aaa"),
+    // Date string value from when the forecast was created
+    forecastCreationDate: format(new Date(forecastObj.created_on), "MMM dd, yyyy"),
+    // Time string value from when the forecast was created
+    forecastCreationTime: format(new Date(forecastObj.created_on), "h:mm aaa")
   }
 
   // Create a string that contains all the important information regarding wind fields
