@@ -3,11 +3,10 @@
 export default function DisplayVariableButtonFromPreviousForecast({ pushSpecificValueToInput, dailyForecastElement }) {
 
 
-  console.log(dailyForecastElement)
+  // console.log(dailyForecastElement)
 
 
   const sendCurrentValueToInput = (value) => {
-    console.log(value)
     console.log("HEYO")
     // pushSpecificValueToInput()
   }
