@@ -92,14 +92,10 @@ main {
   transition: margin-left .5s;
 }
 
-.forecast-history-line {
-  display: grid;
+.forecast-form-container {
+  outline: 1px solid red;
 }
 
-.forecast-history-line > div {
-  width: 100px;
-}
-
-.sub-history-line :nth-child(even){
-  background-color: gray;
+.forecast-form-card {
+  outline: 1px solid green;
 }

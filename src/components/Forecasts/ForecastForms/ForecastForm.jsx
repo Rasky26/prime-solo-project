@@ -13,6 +13,9 @@ import DisplayVariableFromPreviousForecast from "../PreviousForecasts/DisplayVar
 // Import utility functions
 import buildWindSpeedString from "../../Utilities/CreateWindSpeedString"
 
+// Import localized stylesheets
+import styles from "./Forecast.module.css"
+
 
 // Component that handles the building and handling of each day's
 // forecast forms
@@ -146,29 +149,24 @@ function ForecastForm({ locationId, forecastDate }) {
     console.log(forecastValue)
   }
 
-  // REF: https://javascript.plainenglish.io/how-to-listen-to-formik-onchange-event-in-react-df00c4d09be
-  // Option #2
-  // const FormObserver = () => {
-  //   const { values } = useFormikContext()
-  //   useEffect(() => {
-  //     console.log("FormObserver::values", values)
-  //   }, [values])
-  //   return null
-  // }
-
+  // Function that removes the `currentInputName` state
+  // value, which controls the removal of the list of
+  // previous forecast DOM list values
   const onBlurListener = (value) => {
-    // console.log(`In the Blur listener with ${value}`)
     setCurrentInputName("")
   }
 
+  // Function that adds the `currentInputName` state
+  // value, which controls the display of the list of
+  // previous forecast DOM list values
   const onFocusListener = (value) => {
-    // console.log(`In the Focus listener with ${value}`)
     setCurrentInputName(value)
   }
 
 
+  // Build the DOM elements
   return (
-    <div>
+    <section className="forecast-form-container">
       <img src={cloudCover[2].image} alt="" />
       <h3>{format(forecastDate, "E. MMM dd, yyyy")}</h3>
       <Formik
@@ -183,61 +181,83 @@ function ForecastForm({ locationId, forecastDate }) {
           // }, 400);
       }}
       >
-        {formik => 
+        {formik =>
         <Form>
           {/* <FormObserver /> */}
-          <Selection
-            label="Cloud Cover"
-            name="cloud_cover"
-            onFocus={e => onFocusListener(e.target.name)}
-            onBlur={e => onBlurListener(e.target.name)}
-          >
-            <option value='-1'></option>
-            {cloudCover.map(cloud => (
-              <option key={cloud.id} value={cloud.id}>{cloud.name}</option>
-            ))}
-          </Selection>
-          <InputField
-            label="PoP %"
-            name="pop"
-            type="text"
-            onFocus={e => onFocusListener(e.target.name)}
-            onBlur={e => onBlurListener(e.target.name)}
-          />
-          <InputField
-            label="Max"
-            name="high_temp"
-            type="text"
-            onFocus={e => onFocusListener(e.target.name)}
-            onBlur={e => onBlurListener(e.target.name)}
-          />
-          <InputField
-            label="Min"
-            name="low_temp"
-            type="text"
-            onFocus={e => onFocusListener(e.target.name)}
-            onBlur={e => onBlurListener(e.target.name)}
-          />
-          <InputField
-            label="Wind Speed"
-            name="wind_speed"
-            type="text"
-            onFocus={e => onFocusListener(e.target.name)}
-            onBlur={e => onBlurListener(e.target.name)}
-          />
-          <Selection
-            label="Wind Direction"
-            name="wind_direction"
-            onFocus={e => onFocusListener(e.target.name)}
-            onBlur={e => onBlurListener(e.target.name)}
-          >
-            <option value="-1"></option>
-            {windDirection.map(wind => (
-              <option key={wind.id} value={wind.id}>{wind.abbreviation}</option>
-            ))}
-          </Selection>
+          <div className="forecast-form-card">
+            <Selection
+              label="Cloud Cover"
+              name="cloud_cover"
+              onFocus={e => onFocusListener(e.target.name)}
+              onBlur={e => {
+                formik.handleBlur(e)
+                onBlurListener(e.target.name)
+              }}
+            >
+              <option value='-1'></option>
+              {cloudCover.map(cloud => (
+                <option key={cloud.id} value={cloud.id}>{cloud.name}</option>
+              ))}
+            </Selection>
+            <InputField
+              label="PoP %"
+              name="pop"
+              type="text"
+              onFocus={e => onFocusListener(e.target.name)}
+              onBlur={e => {
+                formik.handleBlur(e)
+                onBlurListener(e.target.name)
+              }}
+            />
+            <InputField
+              label="Max"
+              name="high_temp"
+              type="text"
+              className={styles.high_temp}
+              onFocus={e => onFocusListener(e.target.name)}
+              onBlur={e => {
+                formik.handleBlur(e)
+                onBlurListener(e.target.name)
+              }}
+            />
+            <InputField
+              label="Min"
+              name="low_temp"
+              type="text"
+              onFocus={e => onFocusListener(e.target.name)}
+              onBlur={e => {
+                formik.handleBlur(e)
+                onBlurListener(e.target.name)
+              }}
+            />
+            <InputField
+              label="Wind Speed"
+              name="wind_speed"
+              type="text"
+              onFocus={e => onFocusListener(e.target.name)}
+              onBlur={e => {
+                formik.handleBlur(e)
+                onBlurListener(e.target.name)
+              }}
+            />
+            <Selection
+              label="Wind Direction"
+              name="wind_direction"
+              onFocus={e => onFocusListener(e.target.name)}
+              onBlur={e => {
+                formik.handleBlur(e)
+                onBlurListener(e.target.name)
+              }}
+            >
+              <option value="-1"></option>
+              {windDirection.map(wind => (
+                <option key={wind.id} value={wind.id}>{wind.abbreviation}</option>
+              ))}
+            </Selection>
 
-          <button type="submit">Submit</button>
+            <button type="submit">Submit</button>
+
+          </div>
 
           <DisplayFullPreviousForecasts
             // Drill down the function to populate local state
@@ -266,7 +286,7 @@ function ForecastForm({ locationId, forecastDate }) {
         </Form>
         }
       </Formik>
-    </div>
+    </section>
   )
 }
 
