@@ -17,7 +17,7 @@ const InputField = ({ label, ...props }) => {
   // Build the DOM input element
   return (
     <div className='input-field'>
-      <label htmlFor={props.id || props.name}>{label}</label>
+    <label htmlFor={props.id || props.name}>{label}</label>
       <input className="text-input" {...field} {...props} />
       {meta.touched && meta.error ? (
         <div className="error">{meta.error}</div>

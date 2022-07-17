@@ -15,6 +15,7 @@ import buildWindSpeedString from "../../Utilities/CreateWindSpeedString"
 
 // Import localized stylesheets
 import styles from "./Forecast.module.css"
+import { ref } from "yup"
 
 
 // Component that handles the building and handling of each day's
@@ -27,7 +28,7 @@ function ForecastForm({ locationId, forecastDate }) {
   // Set the initial state values
   const [forecastId, setForecastId] = useState(null)
   const [createdOn, setCreatedOn] = useState(null)
-  const [cloudCoverState, setCloudCoverState] = useState("")
+  const [cloudCoverState, setCloudCoverState] = useState(-1)
   const [popState, setPopState] = useState("")
   const [highTempState, setHighTempState] = useState("")
   const [lowTempState, setLowTempState] = useState("")
@@ -60,11 +61,11 @@ function ForecastForm({ locationId, forecastDate }) {
       .min(0, "Can not have negative PoP %")
       .max(100, "PoP % can not exceed 100%"),
     high_temp: Yup.number()
-      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbable")
-      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbable"),
+      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbably high")
+      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbably low"),
     low_temp: Yup.number()
-      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbable")
-      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbable"),
+      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbably high")
+      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbably low"),
     wind_speed: Yup.string()
       .matches(
         /^(\d{1,3})[\s-]*(\d{1,3}[\s]*)*(mph){0,1}\s*[gG]{0,1}(\d{0,3})[\s-]*(\d{0,3})$/,
@@ -149,11 +150,10 @@ function ForecastForm({ locationId, forecastDate }) {
     console.log(forecastValue)
   }
 
-  // Function that removes the `currentInputName` state
-  // value, which controls the removal of the list of
-  // previous forecast DOM list values
-  const onBlurListener = (value) => {
-    setCurrentInputName("")
+  // Cloud cover selection handler. Controls which
+  // cloud cover icon will be shown.
+  const cloudCoverIdListener = (value) => {
+    setCloudCoverState(Number(value))
   }
 
   // Function that adds the `currentInputName` state
@@ -163,11 +163,17 @@ function ForecastForm({ locationId, forecastDate }) {
     setCurrentInputName(value)
   }
 
+  // Function that removes the `currentInputName` state
+  // value, which controls the removal of the list of
+  // previous forecast DOM list values
+  const onBlurListener = (value) => {
+    setCurrentInputName("")
+  }
+
 
   // Build the DOM elements
   return (
     <section className="forecast-form-container">
-      <img src={cloudCover[2].image} alt="" />
       <h3>{format(forecastDate, "E. MMM dd, yyyy")}</h3>
       <Formik
         initialValues={initialValues}
@@ -183,12 +189,14 @@ function ForecastForm({ locationId, forecastDate }) {
       >
         {formik =>
         <Form>
-          {/* <FormObserver /> */}
           <div className="forecast-form-card">
+            <img src={(cloudCoverState > -1) ? cloudCover[cloudCoverState].image : "../images/cloud_icons/default-icon.png"} alt="" />
             <Selection
               label="Cloud Cover"
               name="cloud_cover"
+              className="cloud-cover-selection"
               onFocus={e => onFocusListener(e.target.name)}
+              onChange={e => cloudCoverIdListener(e.target.value)}
               onBlur={e => {
                 formik.handleBlur(e)
                 onBlurListener(e.target.name)
@@ -199,16 +207,21 @@ function ForecastForm({ locationId, forecastDate }) {
                 <option key={cloud.id} value={cloud.id}>{cloud.name}</option>
               ))}
             </Selection>
-            <InputField
-              label="PoP %"
-              name="pop"
-              type="text"
-              onFocus={e => onFocusListener(e.target.name)}
-              onBlur={e => {
-                formik.handleBlur(e)
-                onBlurListener(e.target.name)
-              }}
-            />
+            <div className="pop-input-container">
+              <InputField
+                label="PoP %"
+                name="pop"
+                type="text"
+                placeholder="Precip
+                Precip"
+                className="pop-input"
+                onFocus={e => onFocusListener(e.target.name)}
+                onBlur={e => {
+                  formik.handleBlur(e)
+                  onBlurListener(e.target.name)
+                }}
+              />
+            </div>
             <InputField
               label="Max"
               name="high_temp"

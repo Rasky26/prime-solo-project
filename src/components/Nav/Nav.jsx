@@ -9,6 +9,8 @@ export default function Nav() {
 
   // Get the current use from the REDUX store
   const user = useSelector(store => store.user)
+  // Get the current count of locations
+  // const locationCount = useSelector(s)
 
   // Initilize the number of forecasts that are
   // pending to be created for the day.
@@ -21,23 +23,27 @@ export default function Nav() {
 
       {user.id ?
         // If the user is logged in, allow them to navigate to the forecast section
-        <Link className="nav-link" to="/">
-          Forecast
-        </Link>
+        <>
+          <Link className="nav-link" to="/">
+            Forecast
+          </Link>
+
+          <Link className="nav-link" to="/locations">
+            Locations
+          </Link>
+
+          <Link className="nav-link" to="/history">
+            History
+          </Link>
+        </>
+
         :
         // Otherwise, allow users to navigate to the homepage.
-        <Link to="/">
-          Home
-        </Link>
+        // <Link to="/">
+        //   Home
+        // </Link>
+        null
       }
-
-      <Link className="nav-link" to="/locations">
-        Locations
-      </Link>
-
-      <Link className="nav-link" to="/history">
-        History
-      </Link>
 
     </nav>
   )
