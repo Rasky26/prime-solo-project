@@ -79,7 +79,8 @@ export default function SearchForecastLocations() {
 
   // Build the DOM element
   return (
-    <div>
+    <section>
+      <p>Search for stations, towns, or even states</p>
       <input
         type="text"
         name="stationSearchField"
@@ -98,6 +99,6 @@ export default function SearchForecastLocations() {
         :
         null
       }
-    </div>
+    </section>
   )
 }

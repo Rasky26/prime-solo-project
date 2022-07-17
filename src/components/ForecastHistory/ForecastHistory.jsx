@@ -3,8 +3,11 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 // Import the used components
-import ForecastDayComponent from "./ForecastDayComponent"
+import ForecastLocationComponent from "./ForecastHistoryLogic/ForecastLocationComponent"
 
+// Import the functionality to restructure the forecast
+// history array
+import reshapeUserForecastHistory from "./Utils/reshapeUserForecastHistory"
 
 // Component that shows the forecast history of the
 // specific user
@@ -24,38 +27,31 @@ export default function ForecastHistory() {
   // Get the current user's forecast history
   const userForecastHistory = useSelector(store => store.forecastHistory.userForecastHistory)
 
-  // Generate a list of unique forecast_for_dates since
-  // several forecasts can all exist for the same date.
-  const uniqueDates = [...new Set(userForecastHistory.map(historyDate => historyDate.forecast_for_date))]
+  // Use the utility function to take our flat forecast
+  // history array and restructure it to categorize the
+  // forecasts based on location and group forecasts
+  // based on their `forecast_for_date`
+  const structuredForecastHistory = reshapeUserForecastHistory(userForecastHistory)
 
-  // Create nested arrays where each `forecast_for_date` is
-  // grouped together in the nested array. This will allow
-  // for easier iteration over the main array to display the
-  // various forecasts to the DOM
+  // Get an array of the location ID keys
+  const locationIds = Object.keys(structuredForecastHistory)
+
+  // Build the DOM elements by sending one location's array
+  // filled with forecast history nested array for that location.
   //
-  // Loop over the unique dates
-  const nestedForecastHistoryArray = uniqueDates.map(
-    // Put matching dates into their own array...
-    date => userForecastHistory.filter(
-      // ...where the matching date matches the unique filter date
-      historyDate => historyDate.forecast_for_date === date
-    )
-  )
-
-
-  // Build the DOM elements by sending one day's array filled with forecast
-  // history objects. Each day will be processed within the top-level
-  // `<ul>` element.
+  //  {"1236": [[...], [...], ..., [...]],
+  //   "1191": [[...], [...], ..., [...]],}
   return (
     <section>
-      <ul>
-        {nestedForecastHistoryArray.map(forecastHistoryArray => 
-          <ForecastDayComponent
-            key={forecastHistoryArray[0].forecast_for_date}
-            forecastHistoryArray={forecastHistoryArray}
-          />
-        )}
-      </ul>
+      {locationIds.map(locationId =>
+
+        <ForecastLocationComponent
+          key={Number(locationId)}
+          locationId={Number(locationId)}
+          locationNestedForecastHistoryArray={structuredForecastHistory[locationId]}
+        />
+
+      )}
     </section>
   )
 }

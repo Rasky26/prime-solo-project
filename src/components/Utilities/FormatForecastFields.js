@@ -31,7 +31,7 @@ function setForecastFieldsForDisplay (forecastObj) {
 
     // Set the cloud cover (current just a string)
     cloudCover: cloudCoverList.find(cloud => cloud.id === forecastObj.cloud_cover).name,
-    cloudCoverImg: '',
+    cloudCoverImg: cloudCoverList.find(cloud => cloud.id === forecastObj.cloud_cover).image,
     cloudCoverDescription: cloudCoverList.find(cloud => cloud.id === forecastObj.cloud_cover).description,
 
     // If the wind speed is not calm, continue constructing the wind string

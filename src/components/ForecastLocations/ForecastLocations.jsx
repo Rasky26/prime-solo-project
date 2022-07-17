@@ -9,7 +9,7 @@ export default function ForecastLocations() {
 
   // Build the DOM elements
   return (
-    <section>
+    <section className="locations-container">
 
       {/*
       List of current tracked forecast locations the user

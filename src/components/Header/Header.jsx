@@ -15,13 +15,13 @@ export default function Header() {
     <header>
         <h1>Met Helper</h1>
 
-    {user.id ?
-      <div className='logout-button-container'>
-        <LogOutButton />
-      </div>
-      :
-      null
-    }
+      {user.id ?
+        <div className='logout-button-container'>
+          <LogOutButton />
+        </div>
+        :
+        null
+      }
 
     </header>
   )

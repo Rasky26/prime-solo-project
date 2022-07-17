@@ -21,10 +21,10 @@ export default function ListSearchedForecastLocation({ searchItem }) {
   }
 
   return (
-    <div>
+    <div className="location-name">
       <button type="button" onClick={setStationToUserList}>Add</button>
-      <p>{searchItem.station}</p>
-      <p>{searchItem.name} - {searchItem.state}</p>
+      <p className="location-station">{searchItem.station}</p>
+      <p className="location-description">{searchItem.name} - {searchItem.state}</p>
     </div>
   )
 }

@@ -7,8 +7,6 @@ export default function ListForecastLocations({ location }) {
 
   // Initialize the dispatch function
   const dispatch = useDispatch()
-  // Get the user from the store
-  const user = useSelector(store => store.user)
 
   // Set all the location-based values as number values
   const latitude = Number(location.latitude)
@@ -31,15 +29,15 @@ export default function ListForecastLocations({ location }) {
     
   // Return the list DOM element
   return (
-    <li>
-      <div>
+    <li className="location-name">
+      <button type="button" onClick={removeStationFromFavorites}>X</button>
+      <div className="location-station">
         {location.station}
       </div>
-      <div>
+      <div className="location-description">
         <span>{location.name}</span> - <span>{location.state}</span>
       </div>
-      <div>Lat: <span>{latitude}</span> Long: <span>{longitude}</span> Ele: <span>{elevation}</span></div>
-      <button type="button" onClick={removeStationFromFavorites}>X</button>
+      <div className="location-coordinates">Lat: <span>{latitude}</span> Long: <span>{longitude}</span> Ele: <span>{elevation}</span></div>
     </li>
   )
 }
