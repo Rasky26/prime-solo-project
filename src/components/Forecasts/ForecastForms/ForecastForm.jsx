@@ -13,10 +13,6 @@ import DisplayVariableFromPreviousForecast from "../PreviousForecasts/DisplayVar
 // Import utility functions
 import buildWindSpeedString from "../../Utilities/CreateWindSpeedString"
 
-// Import localized stylesheets
-import styles from "./Forecast.module.css"
-import { ref } from "yup"
-
 
 // Component that handles the building and handling of each day's
 // forecast forms
@@ -58,19 +54,19 @@ function ForecastForm({ locationId, forecastDate }) {
     cloud_cover: Yup.number()
       .oneOf(cloudCover.map(cloud => cloud.id), "Invalid selection"),
     pop: Yup.number()
-      .min(0, "Can not have negative PoP %")
-      .max(100, "PoP % can not exceed 100%"),
+      .min(0, "Can not be negative")
+      .max(100, "Can not exceed 100%"),
     high_temp: Yup.number()
-      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbably high")
-      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbably low"),
+      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbably low")
+      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbably high"),
     low_temp: Yup.number()
-      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbably high")
-      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbably low"),
+      .min(forecastLimits.LOW_TEMP_LIMIT, "Too improbably low")
+      .max(forecastLimits.HIGH_TEMP_LIMIT, "Too improbably high"),
     wind_speed: Yup.string()
       .matches(
         /^(\d{1,3})[\s-]*(\d{1,3}[\s]*)*(mph){0,1}\s*[gG]{0,1}(\d{0,3})[\s-]*(\d{0,3})$/,
         // /^(\d{1,3})[\s-]*(\d{1,3}[\s]*)*(mph|m\/s|ms|kn|kt|kts){0,1}\s*[gG]{0,1}(\d{0,3})[\s-]*(\d{0,3})$/,
-        "Entry needs similar format to: 5-15mph G25-35"
+        "Requires similar format to: 5-15mph G25-35"
     ),
     wind_direction: Yup.number()
       .oneOf(windDirection.map(wind => wind.id), "Invalid selection"),
@@ -188,32 +184,30 @@ function ForecastForm({ locationId, forecastDate }) {
       }}
       >
         {formik =>
-        <Form>
+        <Form className="forecast-form">
           <div className="forecast-form-card">
             <img src={(cloudCoverState > -1) ? cloudCover[cloudCoverState].image : "../images/cloud_icons/default-icon.png"} alt="" />
-            <Selection
-              label="Cloud Cover"
-              name="cloud_cover"
-              className="cloud-cover-selection"
-              onFocus={e => onFocusListener(e.target.name)}
-              onChange={e => cloudCoverIdListener(e.target.value)}
-              onBlur={e => {
-                formik.handleBlur(e)
-                onBlurListener(e.target.name)
-              }}
-            >
-              <option value='-1'></option>
-              {cloudCover.map(cloud => (
-                <option key={cloud.id} value={cloud.id}>{cloud.name}</option>
-              ))}
-            </Selection>
+            <div className="cloud-cover-selection-container">
+              <Selection
+                name="cloud_cover"
+                className="cloud-cover-selection"
+                onFocus={e => onFocusListener(e.target.name)}
+                onChange={e => cloudCoverIdListener(e.target.value)}
+                onBlur={e => {
+                  formik.handleBlur(e)
+                  onBlurListener(e.target.name)
+                }}
+              >
+                <option value='-1' className="cloud-cover-selection-option">&nbsp;{`<Cloud Cover>`}</option>
+                {cloudCover.map(cloud => (
+                  <option key={cloud.id} value={cloud.id}>&nbsp;{cloud.name}</option>
+                ))}
+              </Selection>
+            </div>
             <div className="pop-input-container">
               <InputField
-                label="PoP %"
                 name="pop"
                 type="text"
-                placeholder="Precip
-                Precip"
                 className="pop-input"
                 onFocus={e => onFocusListener(e.target.name)}
                 onBlur={e => {
@@ -222,76 +216,89 @@ function ForecastForm({ locationId, forecastDate }) {
                 }}
               />
             </div>
-            <InputField
-              label="Max"
-              name="high_temp"
-              type="text"
-              className={styles.high_temp}
-              onFocus={e => onFocusListener(e.target.name)}
-              onBlur={e => {
-                formik.handleBlur(e)
-                onBlurListener(e.target.name)
-              }}
-            />
-            <InputField
-              label="Min"
-              name="low_temp"
-              type="text"
-              onFocus={e => onFocusListener(e.target.name)}
-              onBlur={e => {
-                formik.handleBlur(e)
-                onBlurListener(e.target.name)
-              }}
-            />
-            <InputField
-              label="Wind Speed"
-              name="wind_speed"
-              type="text"
-              onFocus={e => onFocusListener(e.target.name)}
-              onBlur={e => {
-                formik.handleBlur(e)
-                onBlurListener(e.target.name)
-              }}
-            />
-            <Selection
-              label="Wind Direction"
-              name="wind_direction"
-              onFocus={e => onFocusListener(e.target.name)}
-              onBlur={e => {
-                formik.handleBlur(e)
-                onBlurListener(e.target.name)
-              }}
-            >
-              <option value="-1"></option>
-              {windDirection.map(wind => (
-                <option key={wind.id} value={wind.id}>{wind.abbreviation}</option>
-              ))}
-            </Selection>
+            <div className="high-temp-container">
+              <InputField
+                name="high_temp"
+                type="text"
+                className="high-temp"
+                onFocus={e => onFocusListener(e.target.name)}
+                onBlur={e => {
+                  formik.handleBlur(e)
+                  onBlurListener(e.target.name)
+                }}
+              />
+            </div>
+            <div className="low-temp-container">
+              <InputField
+                name="low_temp"
+                type="text"
+                className="low-temp"
+                onFocus={e => onFocusListener(e.target.name)}
+                onBlur={e => {
+                  formik.handleBlur(e)
+                  onBlurListener(e.target.name)
+                }}
+              />
+            </div>
+            <div className="wind-speed-container">
+              <InputField
+                name="wind_speed"
+                type="text"
+                className="wind-speed"
+                onFocus={e => onFocusListener(e.target.name)}
+                onBlur={e => {
+                  formik.handleBlur(e)
+                  onBlurListener(e.target.name)
+                }}
+              />
+            </div>
+            <div className="wind-direction-container">
+              <Selection
+                name="wind_direction"
+                className="wind-direction"
+                onFocus={e => onFocusListener(e.target.name)}
+                onBlur={e => {
+                  formik.handleBlur(e)
+                  onBlurListener(e.target.name)
+                }}
+              >
+                <option value="-1">&nbsp;{`<DIR>`}</option>
+                {windDirection.map(wind => (
+                  <option key={wind.id} value={wind.id}>&nbsp;{wind.abbreviation}</option>
+                ))}
+              </Selection>
+            </div>
 
-            <button type="submit">Submit</button>
+            <div className="forecast-submission-container">
+              <button type="submit">Submit</button>
+            </div>
 
           </div>
 
-          <DisplayFullPreviousForecasts
-            // Drill down the function to populate local state
-            populateFormWithPreviousForecast={populateFormWithPreviousForecast}
-            // Send the forecast-specific values
-            locationId={locationId}
-            forecastDate={forecastDate}
-            // Pass in the formik props
-            formik={formik}
-          />
-
-          {currentInputName ?
-            <DisplayVariableFromPreviousForecast
-              // Drill down the function to populate the specific local state
-              pushSpecificValueToInput={pushSpecificValueToInput}
+          <div className="past-full-forecast-container">
+            <DisplayFullPreviousForecasts
+              // Drill down the function to populate local state
+              populateFormWithPreviousForecast={populateFormWithPreviousForecast}
               // Send the forecast-specific values
               locationId={locationId}
               forecastDate={forecastDate}
-              // Send the target input name
-              currentInputName={currentInputName}
+              // Pass in the formik props
+              formik={formik}
             />
+          </div>
+
+          {currentInputName ?
+            <div className="past-daily-forecast-container">
+              <DisplayVariableFromPreviousForecast
+                // Drill down the function to populate the specific local state
+                pushSpecificValueToInput={pushSpecificValueToInput}
+                // Send the forecast-specific values
+                locationId={locationId}
+                forecastDate={forecastDate}
+                // Send the target input name
+                currentInputName={currentInputName}
+              />
+            </div>
             :
             null
           }

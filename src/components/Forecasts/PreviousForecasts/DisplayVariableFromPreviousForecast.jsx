@@ -111,7 +111,7 @@ export default function DisplayVariableFromPreviousForecast({ pushSpecificValueT
 
   // Buid the DOM elements
   return (
-    <ul>
+    <ul className="past-daily-forecast-list">
       {dailyForecastElementHistory.map(dailyForecastElement =>
         <DisplayVariableButtonFromPreviousForecast
           key={dailyForecastElement.id}

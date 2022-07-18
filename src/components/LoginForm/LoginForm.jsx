@@ -64,13 +64,15 @@ function LoginForm() {
       {formik => (
         <Form>
           <InputField
-            label="Email Address"
+            // label="Email Address"
             name="email"
             type="text"
+            placeholder="Email Address"
           />
           <InputFieldHiddenValues
-            label="Password"
+            // label="Password"
             name="password"
+            placeholder="Password"
           />
           <button type="submit" disabled={formik.isSubmitting}>Login</button>
         </Form>

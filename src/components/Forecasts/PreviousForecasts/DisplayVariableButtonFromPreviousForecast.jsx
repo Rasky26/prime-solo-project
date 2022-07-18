@@ -13,9 +13,9 @@ export default function DisplayVariableButtonFromPreviousForecast({ pushSpecific
 
   // Build the DOM elements
   return (
-    <li>
-      <button type="button" onClick={sendCurrentValueToInput}>{dailyForecastElement.string}</button>
-      <p>{dailyForecastElement.created_on}</p>
+    <li className="past-daily-forecast-list-item">
+      <button type="button" onClick={sendCurrentValueToInput}>{dailyForecastElement.string ? dailyForecastElement.string : "0%"}</button>
+      <p><span>Made on</span>: {dailyForecastElement.created_on}</p>
     </li>
   )
 }

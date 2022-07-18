@@ -19,6 +19,7 @@ export default function DisplayFullPreviousForecastButtonText({
     <button
     key={forecastValues.id}
     type="button"
+    className="forecast-past-forecast-button"
     onClick={() => {
       // Set the initialValues to the previous forecast
       populateFormWithPreviousForecast(forecastValues)
@@ -26,12 +27,15 @@ export default function DisplayFullPreviousForecastButtonText({
       formik.resetForm()}}
     >
       <div>
-        <p>{forecast.forecastCreationDateTime}</p>
-        <div>{forecast.cloudCover}</div>
-        <div>{forecast.pop}</div>
-        <div>{forecast.highTemp}</div>
-        <div>{forecast.lowTemp}</div>
-        <div>{forecast.windString}</div>
+        <p className="forecast-past-creation-date">{forecast.forecastCreationDateTime}</p>
+        <div className="forecast-past-bold">{forecast.cloudCover}</div>
+        {forecast.pop ?
+          <div>PoP: <span className="forecast-past-bold">{forecast.pop}</span></div>
+          :
+          null
+        }
+        <div>High: <span className="forecast-past-bold">{forecast.highTemp}</span>, Low: <span className="forecast-past-bold">{forecast.lowTemp}</span></div>
+        <div><span className="forecast-past-bold">{forecast.windString}</span></div>
       </div>
 
     </button>

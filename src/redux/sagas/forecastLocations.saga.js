@@ -86,6 +86,7 @@ function* removeUserForecastLocation(action) {
   }
 }
 
+
 // Get the user's forecast location array from the server
 function* userForecastLocations() {
   yield takeLatest("ADD_STATION_TO_USER_STATION_LIST", addStationToUserStationList)
