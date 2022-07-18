@@ -15,7 +15,7 @@ export default function LoginPage() {
 
   // Build the Login page
   return (
-    <div>
+    <div className='login-container'>
 
       {errors.loginMessage ?
         <p className='error-field'>{errors.loginMessage}</p>

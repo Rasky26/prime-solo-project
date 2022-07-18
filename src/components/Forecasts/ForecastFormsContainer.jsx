@@ -31,6 +31,7 @@ export default function ForecastFormsContainer() {
 
       <LocationSelection
         locations={locations}
+        currentStationId={currentStationId}
         onSelectLocation={onSelectLocation}
       />
 

@@ -84,12 +84,13 @@ export default function SearchForecastLocations() {
       <input
         type="text"
         name="stationSearchField"
+        placeholder="Search"
         // value={searchTerm}
         value={debouncedTerm} // Shows the current value from the user
         // onChange={e => setSearchTerm(e.target.value)}
         onChange={e => setDebouncedTerm(e.target.value)} // References the delayed search method
       />
-      <label htmlFor="stationSearchField">Search</label>
+      {/* <label htmlFor="stationSearchField">Search</label> */}
       {searchResults ?
 
         searchResults.map(searchItem => (

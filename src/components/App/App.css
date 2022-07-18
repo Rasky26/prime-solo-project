@@ -40,7 +40,7 @@ h3 {
 
 header {
   height: var(--header-height);
-  background-color: var(--clr-background);
+  background-color: var(--clr-link);
   color: var(--clr-font-light);
 }
 
@@ -102,7 +102,6 @@ nav .closebtn {
 }
 
 main {
-  outline: 2px solid green;
   margin-left: var(--navbar-width);
   padding: 20px;
 
@@ -119,18 +118,57 @@ main {
   background-size: cover;
 }
 
-.forecast-form-container {
-  outline: 1px solid red;
-  width: 28rem;
+.forecast-location-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.forecast-location-button {
+  border: none;
+  border-radius: 8px;
+  padding: 1em 3em;
+  font-weight: var(--fw-bold);
+  transition: 0.26s ease-in-out;
+}
+
+.forecast-location-button:focus,
+.forecast-location-button:hover {
+  box-shadow: 0 0 6px var(--clr-link-light);
+}
+
+.active-forecast-location {
+  background-color: var(--clr-link);
+  color: var(--clr-font-light);
+}
+
+.forecast-location-container {
+  margin: 0 auto;
+  margin-bottom: 3em;
+}
+
+.forecast-location-container > div {
+  font-size: 85%;
   text-align: center;
+  word-wrap: break-word;
+}
+
+.forecast-form {
+  position: relative;
+}
+
+.forecast-form-container {
+  width: 488px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .forecast-form-card {
   position: relative;
+  box-shadow: 0px 0px 12px var(--clr-background);
   background-color: var(--clr-white);
-  border: 8px solid var(--clr-font-medium);
+  border: 8px solid var(--clr-link);
   border-radius: 4em;
-  height: 36rem;
+  height: 552px;
   padding-top: 2em;
 }
 
@@ -145,27 +183,256 @@ main {
   z-index: 1;
 }
 
-/* .pop-input-container {
-  outline: 1px solid pink;
+.past-full-forecast-container {
   position: absolute;
-  transform: translate(12rem, -5.5rem);
+  display: flex;
+  flex-direction: column;
+  transform: translate(500px, -548px);
+}
+
+.forecast-past-forecast-button {
+  margin: 0px 0px 0.5em;
+  box-shadow: 0px 0px 12px var(--clr-background);
+  border: 3px solid var(--clr-link);
+  border-radius: 0 8px 16px;
+  background-color: var(--clr-link-light);
+  width: 250px;
+  transition: 0.26s ease-in-out;
+}
+
+.forecast-past-forecast-button:hover {
+  background-color: var(--clr-link);
+}
+
+.forecast-past-forecast-button:nth-child(2) {
+  margin-left: 16px;
+}
+
+.forecast-past-forecast-button:nth-child(3) {
+  margin-left: 32px;
+}
+
+.forecast-past-forecast-button:nth-child(4) {
+  margin-left: 48px;
+}
+
+.forecast-past-creation-date {
+  font-size: 86%;
+  font-weight: var(--fw-light);
+}
+
+.forecast-past-bold {
+  font-weight: var(--fw-bold);
+}
+
+.cloud-cover-selection-container {
+  position: absolute;
+  transform: translate(20px, -180px);
+}
+
+.cloud-cover-selection {
+  box-shadow: 0px 0px 6px var(--clr-background);
+  background-color: var(--clr-font-light);
+  width: 160px;
+  height: 43px;
+  border: none;
+  color: var(--clr-dark)
+}
+
+.cloud-cover-selection > option {
+  font-weight: bolder;
+}
+
+.cloud-cover-selection + .error {
+  text-align: left;
+}
+
+.pop-input-container {
+  position: absolute;
+  transform: translate(275px, -90px);
 }
 
 .pop-input {
-  background-color: hsl(0, 0%, 92%);
+  box-shadow: 0px 0px 6px var(--clr-background);
+  background-color: var(--clr-font-light);
   border-width: 0px;
   border: none;
-  width: 16rem;
-  padding-right: 0.86em;
+  width: 160px;
+  height: 86px;
+  padding-right: 0.56ch;
   text-align: right;
-  font-size: 286%;
-  font-weight: bold;
+  font-size: 250%;
+  font-weight: var(--fw-bold);
+  color: var(--clr-dark)
 }
 
-.pop-input label {
+.cloud-cover-selection:hover,
+.cloud-cover-selection:focus,
+.pop-input:hover,
+.pop-input:focus,
+.wind-speed:hover,
+.wind-speed:focus,
+.wind-direction:hover,
+.wind-direction:focus {
+  outline: none;
+}
+
+.pop-input + .error {
+  text-align: right;
+}
+
+.high-temp-container {
   position: absolute;
-  transform: translateY(-20px);
-} */
+  transform: translate(194px, 28px);
+  /* filter: drop-shadow(0px 0px 3px var(--clr-background)); */
+}
+
+.low-temp-container {
+  position: absolute;
+  transform: translate(56px, 103px);
+  /* filter: drop-shadow(0px 0px 3px var(--clr-background)); */
+}
+
+.high-temp,
+.low-temp {
+  background-color: var(--clr-font-light);
+  border: none;
+  width: 222px;
+  height: 111px;
+  font-size: 360%;
+  font-weight: var(--fw-bold);
+  color: var(--clr-back);
+}
+
+.high-temp {
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 100%,
+    40% 100%,
+    0 60%
+  );
+  text-align: right;
+  padding-right: 1ch;
+}
+
+.high-temp + .error {
+  text-align: right;
+}
+
+.low-temp {
+  clip-path: polygon(
+    0% 0%,
+    60% 0%,
+    100% 40%,
+    100% 100%,
+    0 100%
+  );
+  padding-left: 1ch;
+}
+
+.low-temp + .error {
+  text-align: left;
+}
+
+.wind-speed-container {
+  position: absolute;
+  transform: translate(56px, 240px);
+}
+
+.wind-speed {
+  box-shadow: 0px 0px 6px var(--clr-background);
+  background-color: var(--clr-font-light);
+  width: 270px;
+  height: 43px;
+  border: none;
+  text-align: center;
+  font-size: 150%;
+  font-weight: var(--fw-bold);
+  color: var(--clr-back);
+}
+
+.wind-direction-container {
+  position: absolute;
+  transform: translate(336px, 240px);
+}
+
+.wind-direction {
+  box-shadow: 0px 0px 6px var(--clr-background);
+  background-color: var(--clr-font-light);
+  width: 80px;
+  height: 43px;
+  border: none;
+  color: var(--clr-dark);
+  text-align: center;
+}
+
+.past-daily-forecast-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  transform: translate(-270px, -548px);
+}
+
+.past-daily-forecast-list {
+  list-style-type: none;
+}
+
+.past-daily-forecast-list-item {
+  margin-bottom: 1em;
+}
+
+.past-daily-forecast-list-item:nth-child(2) {
+  margin-right: 8px;
+}
+
+.past-daily-forecast-list-item:nth-child(3) {
+  margin-right: 16px;
+}
+
+.past-daily-forecast-list-item:nth-child(4) {
+  margin-right: 24px;
+}
+
+.past-daily-forecast-list-item:nth-child(5) {
+  margin-right: 32px;
+}
+
+.past-daily-forecast-list-item:nth-child(6) {
+  margin-right: 40px;
+}
+
+.past-daily-forecast-list-item:nth-child(7) {
+  margin-right: 48px;
+}
+
+.past-daily-forecast-list-item:nth-child(8) {
+  margin-right: 56px;
+}
+
+.past-daily-forecast-list-item > button {
+  box-shadow: 0px 0px 4px var(--clr-font-medium);
+  margin-right: 0.5em;
+  border: 2px solid var(--clr-link);
+  border-radius: 4px 0px 4px 8px;
+  min-width: 96px;
+  background-color: var(--clr-link-light);
+  font-weight: var(--fw-bold);
+}
+
+.past-daily-forecast-list-item > p {
+  font-weight: var(--fw-light);
+  font-size: 80%;
+}
+
+.past-daily-forecast-list-item > p> span {
+  font-style: italic;
+}
+
+.forecast-submission-container {
+  position: absolute;
+  transform: translate(206px, 296px);
+}
 
 .locations-container {
   display: flex;
@@ -377,4 +644,37 @@ main {
 
 .hide {
   display: none;
+}
+
+.not-logged-in .button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.not-logged-in .button-container a {
+  margin: 1em 3em;
+}
+
+.not-logged-in p:nth-child(2) {
+  margin: 1em 0 3em;
+  padding-left: 2em;
+}
+
+.not-logged-in p:nth-child(3) {
+  margin: 1em 0 3em;
+  padding-left: 4em;
+}
+
+.not-logged-in p:nth-child(4) {
+  margin: 1em 0 3em;
+  padding-left: 6em;
+}
+
+.login-container {
+  padding-left: 30%;
+  outline: 1px solid green;
+}
+
+.login-container form input {
+  margin: 1em;
 }

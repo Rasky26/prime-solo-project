@@ -26,6 +26,10 @@ export default function ForecastHistory() {
 
   // Get the current user's forecast history
   const userForecastHistory = useSelector(store => store.forecastHistory.userForecastHistory)
+  // Get the locations from REDUX store
+  const userLocationIdArray = useSelector(store => store.forecastLocations.userForecastLocationList.map(
+    forecastLocation => forecastLocation.id
+  ))
 
   // Use the utility function to take our flat forecast
   // history array and restructure it to categorize the
@@ -35,6 +39,8 @@ export default function ForecastHistory() {
 
   // Get an array of the location ID keys
   const locationIds = Object.keys(structuredForecastHistory)
+
+  
 
   // Build the DOM elements by sending one location's array
   // filled with forecast history nested array for that location.
